@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions dnf nvm gh)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions dnf nvm gh golang)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -122,6 +122,10 @@ alias n3=nnn
 
 export EDITOR='nvim'
 export TERMINAL='kitty'
+export TERM='xterm-256color'
+
+export GOPATH=$HOME/go
+export PATH="$HOME/go/bin:$PATH"
 
 export NNN_FCOLORS='c1e26d6b006033f7c6d6abc4'
 export NNN_OPENER='/home/v01d/.config/nnn/plugins/nuke'
@@ -147,3 +151,19 @@ nnn_cd()
 }
 
 trap nnn_cd EXIT
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/v01d/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/v01d/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/v01d/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/v01d/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

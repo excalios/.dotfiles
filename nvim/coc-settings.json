@@ -1,4 +1,14 @@
 {
+    "languageserver": {
+        "golang": {
+            "command": "gopls",
+            "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+            "filetypes": ["go"],
+            "initializationOptions": {
+                "usePlaceholders": true
+            }
+        }
+    },
     "coc.preferences.formatOnType": true,
     "coc.preferences.formatOnSaveFiletypes": [
         "blade",
@@ -30,4 +40,5 @@
     "prettier.trailingComma": "es5",
     "prettier.arrowParens": "avoid",
     "prettier.tabWidth": 4
+    //"html.autoClosingTags": true
 }

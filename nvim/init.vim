@@ -20,7 +20,11 @@ Plug 'ryanoasis/vim-devicons'
 " This devicon provide icons to telescope
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'scrooloose/nerdcommenter'
+
 Plug 'Yggdroot/indentLine'
+
+" Go Language
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Laravel plugs
 " Enable only when developing laravel
@@ -29,9 +33,19 @@ Plug 'tpope/vim-projectionist'        "|
 Plug 'noahfrederick/vim-composer'     "|
 Plug 'noahfrederick/vim-laravel'
 
-"Plug 'neovim/nvim-lspconfig'
-"Plug 'nvim-lua/completion-nvim'
+Plug 'neovim/nvim-lspconfig'
+"Plug 'hrsh7th/cmp-nvim-lsp'
+"Plug 'hrsh7th/cmp-buffer'
+"Plug 'hrsh7th/nvim-cmp'
 Plug 'prabirshrestha/async.vim'
+
+" LuaSnip
+"Plug 'L3MON4D3/LuaSnip'
+"Plug 'saadparwaiz1/cmp_luasnip'
+
+" ultisnips
+"Plug 'SirVer/ultisnips'
+"Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 Plug 'habamax/vim-godot'
 
@@ -57,6 +71,10 @@ Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
+Plug 'sheerun/vim-polyglot'
+"Plug 'nvim-treesitter/nvim-treesitter', {'branch' : '0.5-compat', 'do': ':TSUpdate'}  " We recommend updating the parsers on update
+"Plug 'windwp/nvim-ts-autotag'
+
 " Color schemes
 "Plug 'morhetz/gruvbox'
 "Plug 'colepeters/spacemacs-theme.vim'
@@ -67,8 +85,6 @@ Plug 'pineapplegiant/spaceduck'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'sheerun/vim-polyglot'
-Plug 'nvim-treesitter/nvim-treesitter', {'branch' : '0.5-compat', 'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
 " Time Tracker for Productivity
 Plug 'wakatime/vim-wakatime'
@@ -82,12 +98,12 @@ call plug#end()
 " gruvbox material
 
 " Important!!
-if has('termguicolors')
-  set termguicolors
-endif
+"if has('termguicolors')
+  "set termguicolors
+"endif
 
 " For dark version.
-set background=dark
+"set background=dark
 
 " For light version.
 "set background=light
@@ -514,6 +530,8 @@ inoremap <silent><expr> <cr> pumvisible() ?
 "let g:coc_filetype_map = {
         "\ 'blade.php': 'blade'
         "\ }
+"
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 "}}}
 
@@ -526,7 +544,8 @@ nnoremap <leader>fg <cmd>lua require('excalios.telescope').fg()<cr>
 "nnoremap <leader>fg <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>fb <cmd>lua require('excalios.telescope').fb()<cr>
 "nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+"nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>fh <cmd>lua require('excalios.telescope').find_hidden()<cr>
 
 nnoremap <leader>tgs <cmd>lua require('telescope.builtin').git_status()<cr>
 nnoremap <leader>tgc <cmd>lua require('telescope.builtin').git_commits()<cr>
@@ -539,13 +558,14 @@ nnoremap <leader>tlg <cmd>lua require('excalios.telescope').tlg()<cr>
 
 " treesitter {{{
 
-lua << EOF
-require'nvim-treesitter.configs'.setup { 
-    highlight = { enable = true },
-    indent = { enable = true},
-    incremental_selection = { enable = false}
-}
-EOF
+"lua << EOF
+"require'nvim-treesitter.configs'.setup { 
+    "highlight = { enable = true, disable = { "html" } },
+    "indent = { enable = true},
+    "incremental_selection = { enable = false}
+"}
+"require('nvim-ts-autotag').setup()
+"EOF
 
 " }}}
 
@@ -592,34 +612,88 @@ EOF
 
 " LSP {{{
 
-set completeopt=menuone,noinsert,noselect
-
-"inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"set completeopt=menuone,noinsert,noselect
 
 "lua << EOF
-"require'lspconfig'.gdscript.setup{ on_attach=require'completion'.on_attach }
+"local cmp = require'cmp'
+
+"cmp.setup({
+    "snippet = {
+        "expand = function(args)
+            "-- require('luasnip').lsp_expand(args.body)
+            "vim.fn["UltiSnips#Anon"](args.body)
+        "end
+    "},
+    "mapping = {
+        "['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        "['<C-f>'] = cmp.mapping.scroll_docs(4),
+        "['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
+        "['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' }),
+        "['<C-Space>'] = cmp.mapping.complete(),
+        "['<C-e>'] = cmp.mapping.close(),
+        "['<CR>'] = cmp.mapping.confirm({ select = true }),
+     "},
+    "sources = {
+        "{ name = 'nvim_lsp' },
+        "-- { name = 'luasnip' },
+        "{ name = 'ultisnips' },
+        "{ name = 'buffer' },
+     "}
+"})
+
+"require'lspconfig'.gdscript.setup{
+    "capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+"}
+"require'lspconfig'.rust_analyzer.setup {
+    "capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+"}
+"require'lspconfig'.gopls.setup {
+    "cmd = {"gopls", "serve"},
+    "capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    "settings = {
+      "gopls = {
+        "analyses = {
+          "unusedparams = true,
+        "},
+        "staticcheck = true,
+      "},
+    "},
+"}
+
+"-- Show Diagnosticts
+"vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]]
+
 "EOF
 
 " }}}
+"
+" Go Language {{{
 
+" Set to spaces instead of indent
+autocmd BufNewFile,BufRead *.go setlocal expandtab tabstop=4 shiftwidth=4 
 
+" Set tabs line
+autocmd BufNewFile,BufRead *.go setlocal list lcs=tab:\|\ 
 
+" completion
+let g:go_code_completion_enabled = 0
 
-" Deno LSP
-"if executable("deno")
-  "augroup LspTypeScript
-    "autocmd!
-    "autocmd User lsp_setup call lsp#register_server({
-    "\ "name": "deno lsp",
-    "\ "cmd": {server_info -> ["deno", "lsp"]},
-    "\ "root_uri": {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), "tsconfig.json"))},
-    "\ "allowlist": ["typescript", "typescript.tsx"],
-    "\ "initialization_options": {
-    "\     "enable": v:true,
-    "\     "lint": v:true,
-    "\     "unstable": v:true,
-    "\   },
-    "\ })
-  "augroup END
-"endif
+" tests
+let g:go_test_show_name = 0
+
+" highlight
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+"let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 0
+let g:go_highlight_format_strings = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_variable_declarations = 0
+let g:go_highlight_variable_assignments = 0
+let g:go_highlight_diagnostic_errors = 1
+let g:go_highlight_diagnostic_warnings = 1
+
+" }}}

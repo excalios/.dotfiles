@@ -7,8 +7,13 @@ local mappings = {
 }
 
 mappings.ff = function()
+    require('telescope.builtin').find_files()
+end
+
+mappings.find_hidden = function()
     require('telescope.builtin').find_files({
-        hidden = false
+        hidden = true,
+        no_ignore = true
     })
 end
 

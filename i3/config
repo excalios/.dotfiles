@@ -53,13 +53,13 @@ new_window pixel 1
 new_float normal
 
 # Remove window borders and set gaps
- #for_window [class="^.*"] border pixel 0
- gaps inner 10
+#for_window [class="^.*"] border pixel 0
+gaps inner 10
 
-#smart_gaps on
-#smart_borders on
+smart_gaps on
+smart_borders on
 
-#hide_edge_borders smart
+hide_edge_borders smart
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
