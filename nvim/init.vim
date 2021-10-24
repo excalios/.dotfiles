@@ -21,7 +21,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'scrooloose/nerdcommenter'
 
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Go Language
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -72,7 +73,7 @@ Plug 'fannheyward/telescope-coc.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 Plug 'sheerun/vim-polyglot'
-"Plug 'nvim-treesitter/nvim-treesitter', {'branch' : '0.5-compat', 'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'branch' : '0.5-compat', 'do': ':TSUpdate'}  " We recommend updating the parsers on update
 "Plug 'windwp/nvim-ts-autotag'
 
 " Color schemes
@@ -558,14 +559,14 @@ nnoremap <leader>tlg <cmd>lua require('excalios.telescope').tlg()<cr>
 
 " treesitter {{{
 
-"lua << EOF
-"require'nvim-treesitter.configs'.setup { 
-    "highlight = { enable = true, disable = { "html" } },
-    "indent = { enable = true},
-    "incremental_selection = { enable = false}
-"}
-"require('nvim-ts-autotag').setup()
-"EOF
+lua << EOF
+require'nvim-treesitter.configs'.setup { 
+    highlight = { enable = true, disable = { "html" } },
+    indent = { enable = true},
+    incremental_selection = { enable = false}
+}
+-- require('nvim-ts-autotag').setup()
+EOF
 
 " }}}
 
@@ -580,8 +581,19 @@ let g:airline#extensions#tabline#enabled = 1
 
  "indents {{{
 
-let g:indentLine_char = '>'
-let g:indentLine_setColors = 0
+"let g:indentLine_char = '>'
+"let g:indentLine_setColors = 0
+
+lua << EOF
+vim.opt.list = true
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_trailing_blankline_indent = false,
+    show_first_indent_level = false,
+    show_current_context = true,
+}
+EOF
 
 " }}}
 

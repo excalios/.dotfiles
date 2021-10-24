@@ -33,12 +33,13 @@
     ],
     "git.addGBlameToVirtualText": true,
     "git.splitWindowCommand": "botright vnew",
-    "clangd.path": "/home/v01d/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd",
+    //"clangd.path": "/home/v01d/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd",
     "snippets.loadFromExtensions": true,
     "emmet.includeLanguages": { "blade": "html" },
     "prettier.singleQuote": true,
     "prettier.trailingComma": "es5",
     "prettier.arrowParens": "avoid",
-    "prettier.tabWidth": 4
+    "prettier.tabWidth": 2,
+    "prettier.useTabs": false
     //"html.autoClosingTags": true
 }
