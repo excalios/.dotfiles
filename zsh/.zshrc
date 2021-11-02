@@ -137,7 +137,7 @@ export ICONLOOKUP=1
 export PAGER='less -R'
 
 if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
+    PATH="$HOME/.local/bin:$PATH:/usr/local/go/bin"
 fi
 
 # vim test
@@ -167,3 +167,9 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+PATH="/home/v01d/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/v01d/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/v01d/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/v01d/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/v01d/perl5"; export PERL_MM_OPT;

@@ -34,7 +34,7 @@ Plug 'tpope/vim-projectionist'        "|
 Plug 'noahfrederick/vim-composer'     "|
 Plug 'noahfrederick/vim-laravel'
 
-Plug 'neovim/nvim-lspconfig'
+"Plug 'neovim/nvim-lspconfig'
 "Plug 'hrsh7th/cmp-nvim-lsp'
 "Plug 'hrsh7th/cmp-buffer'
 "Plug 'hrsh7th/nvim-cmp'
@@ -73,7 +73,7 @@ Plug 'fannheyward/telescope-coc.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 Plug 'sheerun/vim-polyglot'
-Plug 'nvim-treesitter/nvim-treesitter', {'branch' : '0.5-compat', 'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 "Plug 'windwp/nvim-ts-autotag'
 
 " Color schemes
@@ -588,7 +588,7 @@ lua << EOF
 vim.opt.list = true
 
 require("indent_blankline").setup {
-    space_char_blankline = " ",
+    --space_char_blankline = " ",
     show_trailing_blankline_indent = false,
     show_first_indent_level = false,
     show_current_context = true,
@@ -688,6 +688,7 @@ autocmd BufNewFile,BufRead *.go setlocal expandtab tabstop=4 shiftwidth=4
 autocmd BufNewFile,BufRead *.go setlocal list lcs=tab:\|\ 
 
 " completion
+let g:go_term_enabled = 1
 let g:go_code_completion_enabled = 0
 
 " tests
