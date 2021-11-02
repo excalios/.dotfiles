@@ -29,9 +29,8 @@ font pango:monospace 8
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-#exec_always --no-startup-id feh --randomize --bg-scale ~/Pictures/Wallpapers/*
-#exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/Peak.png
-exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/BlackHoleKurz.png
+#exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/BlackHoleKurz.png
+exec_always --no-startup-id feh --bg-scale --randomize ~/Pictures/Wallpapers/purp/*
 exec_always --no-startup-id $HOME/.config/i3/compton.sh
 exec --no-startup-id i3-battery-popup -L 20 -t 10s
 #exec --no-startup-id noisetorch -i
@@ -65,16 +64,26 @@ hide_edge_borders smart
 floating_modifier $mod
 
 # start a terminal
-# without graphic cards
 bindsym $mod+Return exec kitty -d="`xcwd`"
-# with graphic cards
-#bindsym $mod+Return exec __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia kitty -d="`xcwd`"
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # lock the screen
 bindsym $mod+Shift+o exec lockColor
+
+# Screenshots
+mode "screenshot" {
+    bindsym s exec "maim -s -u | tee ~/Pictures/Screenshots/SS-$(date +%s).png | xclip -selection clipboard -t image/png -i"; mode "default"
+    bindsym a exec "scrot -e 'xclip -selection clipboard -t image/png -i $f  && mv $f ~/Pictures/Screenshots/'"; mode "default"
+
+    # back to normal: Enter or Escape or $mod+r
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+#bindsym $mod+Shift+s exec "scrot -e 'xclip -selection clipboard -t image/png -i $f  && mv $f ~/Pictures/Screenshots/'"
+bindsym $mod+Shift+s mode "screenshot"
 
 # disable mouse focus
 focus_follows_mouse no
@@ -88,6 +97,8 @@ focus_follows_mouse no
 
 # Start Menu with Rofi (Program Laucher)
 bindsym $mod+d exec --no-startup-id rofi -show drun -modi drun -show-icons
+bindsym $mod+p exec --no-startup-id rofi-pass
+bindsym $mod+Shift+p exec --no-startup-id rofi-pass --insert
 bindsym $mod+Shift+d exec --no-startup-id rofi -show window -show-icons
 
 
