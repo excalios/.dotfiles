@@ -9,7 +9,10 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod4
+# Windows key
+#set $mod Mod4
+# Alt Key
+set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -24,20 +27,23 @@ font pango:monospace 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock  -i /home/v01d/Pictures/Wallpapers/liosWallLock.png -f -e --nofork -t
+exec --no-startup-id xss-lock --transfer-sleep-lock -- lockColor
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-#exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/BlackHoleKurz.png
-exec_always --no-startup-id feh --bg-scale --randomize ~/Pictures/Wallpapers/purp/*
+exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/wallhaven-6oddjq.jpg
+#exec_always --no-startup-id feh --bg-scale --randomize ~/Pictures/Wallpapers/purp/*
 exec_always --no-startup-id $HOME/.config/i3/compton.sh
-exec --no-startup-id i3-battery-popup -L 20 -t 10s
+exec --no-startup-id i3-battery-popup -L 20 -t 10s -n
 #exec --no-startup-id noisetorch -i
 
 # I3 Gnome
 exec --no-startup-id /usr/libexec/gsd-xsettings
-exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1 &
+# Start Policy Kit X11
+exec --no-startup-id lxsession &
+# Start Policy Kit Gnome
+#exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1 &
 #exec --no-startup-id gnome-flashback
 
 # Use pactl to adjust volume in PulseAudio.
@@ -49,13 +55,13 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
  #for_window [class="^.*"] border pixel 1
 new_window pixel 1
-new_float normal
+new_float pixel 1
 
 # Remove window borders and set gaps
 #for_window [class="^.*"] border pixel 0
 gaps inner 10
 
-smart_gaps on
+#smart_gaps on
 smart_borders on
 
 hide_edge_borders smart
@@ -74,8 +80,8 @@ bindsym $mod+Shift+o exec lockColor
 
 # Screenshots
 mode "screenshot" {
-    bindsym s exec "maim -s -u | tee ~/Pictures/Screenshots/SS-$(date +%s).png | xclip -selection clipboard -t image/png -i"; mode "default"
-    bindsym a exec "scrot -e 'xclip -selection clipboard -t image/png -i $f  && mv $f ~/Pictures/Screenshots/'"; mode "default"
+    bindsym s mode "default"; exec "maim -s -u | tee ~/Pictures/Screenshots/SS-$(date +%s).png | xclip -selection clipboard -t image/png -i"
+    bindsym a mode "default"; exec "scrot -d 1 -e 'xclip -selection clipboard -t image/png -i $f  && mv $f ~/Pictures/Screenshots/' && exec notify-send --icon=camera Screenshot 'Screenshot been taken'"
 
     # back to normal: Enter or Escape or $mod+r
     bindsym Return mode "default"
@@ -209,7 +215,9 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 for_window [title="Battery Warning"] sticky enable
 for_window [instance="telegram"] sticky enable
-for_window [instance="Discord"] sticky enable
+for_window [instance="discord"] sticky enable
+for_window [instance="zoom"] sticky enable
+for_window [instance="signal"] sticky enable
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

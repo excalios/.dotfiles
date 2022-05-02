@@ -1,5 +1,5 @@
 configuration {
-	theme: "/home/v01d/.config/rofi/lios.rasi";
     show-icons: true;
     terminal: "kitty";
 }
+@theme "/home/v01d/.config/rofi/lios.rasi"

@@ -10,8 +10,10 @@ set nocompatible
 
 call plug#begin(stdpath('data') . '/plugged')
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'mcchrish/nnn.vim'
+Plug 'nvim-orgmode/orgmode'
+
+"Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+"Plug 'mcchrish/nnn.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -25,7 +27,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Go Language
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go'
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Laravel plugs
 " Enable only when developing laravel
@@ -34,27 +37,35 @@ Plug 'tpope/vim-projectionist'        "|
 Plug 'noahfrederick/vim-composer'     "|
 Plug 'noahfrederick/vim-laravel'
 
-"Plug 'neovim/nvim-lspconfig'
-"Plug 'hrsh7th/cmp-nvim-lsp'
-"Plug 'hrsh7th/cmp-buffer'
-"Plug 'hrsh7th/nvim-cmp'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+Plug 'onsails/lspkind-nvim'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'prabirshrestha/async.vim'
+
+Plug 'windwp/nvim-autopairs'
 
 " LuaSnip
 "Plug 'L3MON4D3/LuaSnip'
 "Plug 'saadparwaiz1/cmp_luasnip'
 
 " ultisnips
-"Plug 'SirVer/ultisnips'
-"Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+Plug 'SirVer/ultisnips'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
-Plug 'habamax/vim-godot'
+"Plug 'habamax/vim-godot'
 
 " Git
+Plug 'ThePrimeagen/git-worktree.nvim'
 Plug 'tpope/vim-fugitive'
 "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 "Plug 'junegunn/fzf.vim'
 "Plug 'stsewd/fzf-checkout.vim'
+
+" Github
+"Plug 'skanehira/gh.vim'
 
 " Debugger
 Plug 'puremourning/vimspector'
@@ -71,10 +82,19 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope-file-browser.nvim'
+
+Plug 'ThePrimeagen/harpoon'
 
 Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+"Plug 'mattn/emmet-vim'
 "Plug 'windwp/nvim-ts-autotag'
+
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'npm install --frozen-lockfile --production',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 
 " Color schemes
 "Plug 'morhetz/gruvbox'
@@ -89,6 +109,9 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Time Tracker for Productivity
 Plug 'wakatime/vim-wakatime'
+
+" Habits
+Plug 'rcarriga/nvim-notify'
 
 call plug#end()
 
@@ -308,6 +331,7 @@ nmap <C-h> :bprevious<CR>
 nmap <C-l> :bnext<CR>
 nmap <C-k> :cp<CR>
 nmap <C-j> :cn<CR>
+nmap <leader>cq :ccl<CR>
 
 nmap <leader>F :Format<CR>
 
@@ -333,6 +357,11 @@ nmap <silent> t<C-g> :TestVisit<CR>
 
 let test#strategy = "neovim"
 let test#neovim#term_position = "vert"
+let g:test#echo_command = 0
+
+let test#go#gotest#options = '-v'
+
+let test#php#phpunit#executable = 'php artisan test'
 
 if has('nvim')
   tmap <C-o> <C-\><C-n>
@@ -356,193 +385,21 @@ endif
 "}}}
 
 ": coc config {{{
-let g:coc_global_extensions = [
-    \ 'coc-prettier',
-    \ 'coc-pairs',
-    \ 'coc-git',
-    \ 'coc-emmet',
-    \ 'coc-yaml',
-    \ 'coc-tsserver',
-    \ 'coc-phpls',
-    \ 'coc-json',
-    \ 'coc-html',
-    \ 'coc-html-css-support',
-    \ 'coc-css',
-    \ 'coc-tailwindcss',
-    \ 'coc-clangd',
-    \ 'coc-highlight',
-    \ 'coc-snippets',
-    \ 'coc-discord-rpc',
-    \ 'coc-vetur',
-    \ 'coc-inline-jest',
-    \]
-" TextEdit might fail if hidden is not set.
-set hidden
-
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
- set updatetime=50
-
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-"if has('nvim')
-  "inoremap <silent><expr> <c-space> coc#refresh()
-"else
-  "inoremap <silent><expr> <c-@> coc#refresh()
-"endif
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Mappings for CoCList
-" Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-inoremap <silent><expr> <cr> pumvisible() ?
-            \ &filetype == "gdscript" ? (coc#expandable() ?  "\<C-y>" : "\<Esc>a")
-            \:  coc#rpc#request('hasSelected', []) ?
-            \  "\<C-y>"
-            \: "\<C-y><CR>"
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-"let g:coc_filetype_map = {
-        "\ 'blade.php': 'blade'
-        "\ }
-"
-autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
-
+"source ~/.config/nvim/coc.vim
 "}}}
 
 " telescope{{{
 
 " Using lua functions
+" Find files in orgs folder
+nnoremap <leader>of <cmd>lua require('excalios.telescope').of()<cr>
 nnoremap <leader>ff <cmd>lua require('excalios.telescope').ff()<cr>
 "nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('excalios.telescope').fg()<cr>
 "nnoremap <leader>fg <cmd>lua require('telescope.builtin').git_files()<cr>
+
+nnoremap <leader>gw :lua require('telescope').extensions.git_worktree.git_worktrees()<CR>
+nnoremap <leader>gc :lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>
 nnoremap <leader>fb <cmd>lua require('excalios.telescope').fb()<cr>
 "nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 "nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
@@ -550,10 +407,41 @@ nnoremap <leader>fh <cmd>lua require('excalios.telescope').find_hidden()<cr>
 
 nnoremap <leader>tgs <cmd>lua require('telescope.builtin').git_status()<cr>
 nnoremap <leader>tgc <cmd>lua require('telescope.builtin').git_commits()<cr>
+
+" File Browser
+nnoremap <leader>ogf <cmd>lua require('excalios.telescope').ogf()<cr>
 nnoremap <leader>tgf <cmd>lua require('excalios.telescope').tgf()<cr>
 "nnoremap <leader>tgf <cmd>lua require('telescope.builtin').file_browser()<cr>
+
 nnoremap <leader>tlg <cmd>lua require('excalios.telescope').tlg()<cr>
 "nnoremap <leader>tlg <cmd>lua require('telescope.builtin').live_grep()<cr>
+
+" Harpoon
+nnoremap <leader>th :Telescope harpoon marks<cr>
+
+" Github
+nnoremap <leader>gi <cmd>lua require('telescope').extensions.gh.issues()<cr><cr>
+nnoremap <leader>gp <cmd>lua require('telescope').extensions.gh.pull_request()<cr><cr>
+nnoremap <leader>gg <cmd>lua require('telescope').extensions.gh.gist()<cr><cr>
+nnoremap <leader>gr <cmd>lua require('telescope').extensions.gh.run()<cr><cr>
+
+"}}}
+
+" harpoon{{{
+
+nnoremap <silent><leader>a :lua require("harpoon.mark").add_file()<CR>
+nnoremap <silent><C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>
+"nnoremap <silent><leader>tc :lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>
+
+nnoremap <silent><A-h> :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <silent><A-t> :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap <silent><A-n> :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap <silent><A-s> :lua require("harpoon.ui").nav_file(4)<CR>
+
+"nnoremap <silent><leader>tu :lua require("harpoon.term").gotoTerminal(1)<CR>
+"nnoremap <silent><leader>te :lua require("harpoon.term").gotoTerminal(2)<CR>
+"nnoremap <silent><leader>cu :lua require("harpoon.term").sendCommand(1, 1)<CR>
+"nnoremap <silent><leader>ce :lua require("harpoon.term").sendCommand(1, 2)<CR>
 
 "}}}
 
@@ -583,6 +471,7 @@ let g:airline#extensions#tabline#enabled = 1
 
 "let g:indentLine_char = '>'
 "let g:indentLine_setColors = 0
+"let g:indent_blankline_show_first_indent_level = v:false
 
 lua << EOF
 vim.opt.list = true
@@ -592,6 +481,7 @@ require("indent_blankline").setup {
     show_trailing_blankline_indent = false,
     show_first_indent_level = false,
     show_current_context = true,
+    --show_current_context_start = true,
 }
 EOF
 
@@ -624,58 +514,140 @@ EOF
 
 " LSP {{{
 
-"set completeopt=menuone,noinsert,noselect
+set completeopt=menuone,noinsert,noselect
 
-"lua << EOF
-"local cmp = require'cmp'
+lua << EOF
+require('nvim-autopairs').setup{}
 
-"cmp.setup({
-    "snippet = {
-        "expand = function(args)
-            "-- require('luasnip').lsp_expand(args.body)
-            "vim.fn["UltiSnips#Anon"](args.body)
-        "end
-    "},
-    "mapping = {
-        "['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        "['<C-f>'] = cmp.mapping.scroll_docs(4),
-        "['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
-        "['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' }),
-        "['<C-Space>'] = cmp.mapping.complete(),
-        "['<C-e>'] = cmp.mapping.close(),
-        "['<CR>'] = cmp.mapping.confirm({ select = true }),
-     "},
-    "sources = {
-        "{ name = 'nvim_lsp' },
-        "-- { name = 'luasnip' },
-        "{ name = 'ultisnips' },
-        "{ name = 'buffer' },
-     "}
-"})
+local cmp = require'cmp'
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-"require'lspconfig'.gdscript.setup{
-    "capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-"}
-"require'lspconfig'.rust_analyzer.setup {
-    "capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-"}
-"require'lspconfig'.gopls.setup {
-    "cmd = {"gopls", "serve"},
-    "capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-    "settings = {
-      "gopls = {
-        "analyses = {
-          "unusedparams = true,
-        "},
-        "staticcheck = true,
-      "},
-    "},
-"}
+local lspkind = require('lspkind')
+lspkind.mode = 'text'
 
-"-- Show Diagnosticts
-"vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]]
+local source_mapping = {
+	buffer = "[Buffer]",
+	nvim_lsp = "[LSP]",
+	nvim_lua = "[Lua]",
+	cmp_tabnine = "[TN]",
+	path = "[Path]",
+}
 
-"EOF
+-- Auto pair
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            -- require('luasnip').lsp_expand(args.body)
+            vim.fn["UltiSnips#Anon"](args.body)
+        end
+    },
+    mapping = {
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+        ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' }),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+     },
+    sources = {
+        { name = "cmp_tabnine" },
+        { name = 'nvim_lsp' },
+        -- { name = 'luasnip' },
+        { name = 'ultisnips' },
+        { name = 'buffer' },
+    },
+    formatting = {
+		format = function(entry, vim_item)
+            vim_item.kind = lspkind.presets.default[vim_item.kind] .. ' ' .. vim_item.kind
+			local menu = source_mapping[entry.source.name]
+			if entry.source.name == 'cmp_tabnine' then
+				if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+					menu = entry.completion_item.data.detail .. ' ' .. menu
+				end
+				vim_item.kind = ''
+			end
+			vim_item.menu = menu
+			return vim_item
+		end
+	},
+})
+
+local tabnine = require("cmp_tabnine.config")
+tabnine:setup({
+	max_lines = 1000,
+	max_num_results = 20,
+	sort = true,
+	run_on_every_keystroke = true,
+	snippet_placeholder = "..",
+})
+
+function CreateNoremap(type, opts)
+	return function(lhs, rhs, bufnr)
+        bufnr = bufnr or 0
+		vim.api.nvim_buf_set_keymap(bufnr, type, lhs, rhs, opts)
+	end
+end
+
+Nnoremap = CreateNoremap("n", { noremap = true })
+Inoremap = CreateNoremap("i", { noremap = true })
+
+
+local function config(_config)
+	return vim.tbl_deep_extend("force", {
+		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		on_attach = function()
+			Nnoremap("gD", ":lua vim.lsp.buf.declaration()<CR>")
+			Nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>")
+			Nnoremap("K", ":lua vim.lsp.buf.hover()<CR>")
+			Nnoremap("gi", ":lua vim.lsp.buf.implementation()<CR>")
+			Nnoremap("gr", ":lua vim.lsp.buf.references()<CR>")
+			Nnoremap("<leader>vws", ":lua vim.lsp.buf.workspace_symbol()<CR>")
+			Nnoremap("<space>e", ":lua vim.diagnostic.open_float()<CR>")
+			Nnoremap("[d", ":lua vim.lsp.diagnostic.goto_next()<CR>")
+			Nnoremap("]d", ":lua vim.lsp.diagnostic.goto_prev()<CR>")
+			Nnoremap("<leader>ca", ":lua vim.lsp.buf.code_action()<CR>")
+			Nnoremap("<leader>rn", ":lua vim.lsp.buf.rename()<CR>")
+			Inoremap("<C-h>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
+		end,
+	}, _config or {})
+end
+
+-- Web Language Server
+-- require'lspconfig'.html.setup(config())
+-- require'lspconfig'.emmet_ls.setup(config())
+-- require'lspconfig'.cssls.setup(config())
+-- require'lspconfig'.cssmodules_ls.setup(config())
+
+require'lspconfig'.gdscript.setup(config())
+
+require'lspconfig'.tsserver.setup(config())
+require'lspconfig'.eslint.setup(config())
+require'lspconfig'.yamlls.setup(config())
+
+require'lspconfig'.jedi_language_server.setup(config())
+require'lspconfig'.gopls.setup(config({
+    cmd = {"gopls", "serve"},
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        staticcheck = true,
+      },
+    },
+}))
+
+-- Show Diagnosticts
+-- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
+EOF
+
+autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
 
 " }}}
 "
@@ -710,3 +682,23 @@ let g:go_highlight_diagnostic_errors = 1
 let g:go_highlight_diagnostic_warnings = 1
 
 " }}}
+
+" nvim notify {{{
+
+lua require('excalios.notify')
+
+" }}}
+
+" nvim orgmode {{{
+
+lua require('excalios.orgmode')
+
+" }}}
+
+" Git Worktree {{{
+
+lua require('excalios.git-worktree')
+
+" }}}
+
+let g:python3_host_prog='/usr/bin/python3'

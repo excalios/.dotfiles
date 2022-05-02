@@ -1,10 +1,19 @@
 require('telescope').load_extension('gh')
 require('telescope').load_extension('coc')
 require('telescope').load_extension('fzf')
+require('telescope').load_extension('file_browser')
+require('telescope').load_extension('harpoon')
+require('telescope').load_extension('git_worktree')
 
 local mappings = {
 
 }
+
+mappings.of = function()
+    require('telescope.builtin').find_files({
+            cwd = '~/Documents/orgs'
+        })
+end
 
 mappings.ff = function()
     require('telescope.builtin').find_files()
@@ -26,9 +35,15 @@ mappings.fb = function()
 end
 
 mappings.tgf = function()
-    require('telescope.builtin').file_browser({
-            hidden = false
+    require 'telescope'.extensions.file_browser.file_browser({
+        path="%:p:h"
     })
+end
+
+mappings.ogf = function()
+    require 'telescope'.extensions.file_browser.file_browser({
+            cwd = '~/Documents/orgs'
+        })
 end
 
 mappings.tlg = function()

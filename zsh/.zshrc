@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions dnf nvm gh golang)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions nvm gh golang archlinux)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -125,7 +125,7 @@ export TERMINAL='kitty'
 export TERM='xterm-256color'
 
 export GOPATH=$HOME/go
-export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/go/bin:$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"
 
 export NNN_FCOLORS='c1e26d6b006033f7c6d6abc4'
 export NNN_OPENER='/home/v01d/.config/nnn/plugins/nuke'
@@ -173,3 +173,10 @@ PERL5LIB="/home/v01d/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/v01d/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/v01d/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/v01d/perl5"; export PERL_MM_OPT;
+
+export SSH_ASKPASS=ssh-askpass
+
+#[ -f ~/.keychain/$HOSTNAME-sh ] && . ~/.keychain/$HOSTNAME-sh 2>/dev/null
+#[ -f ~/.keychain/$HOSTNAME-sh-gpg ] && . ~/.keychain/$HOSTNAME-sh-gpg 2>/dev/null
+
+eval $(keychain --eval --quiet ~/.ssh/id_rsa)

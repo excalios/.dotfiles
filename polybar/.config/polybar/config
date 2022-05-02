@@ -18,7 +18,8 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #000000ff
+background = #1b1c36
+;background = #000000ff
 background-alt = #b3a1e6
 ;foreground = ${xrdb:color7:#222}
 foreground = #7a5ccc
@@ -33,24 +34,27 @@ width = 100%
 height = 27
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 6.0
+radius = 8
 fixed-center = true
 enable-ipc = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
-line-color = #f00
+line-size = 0
+;line-color = #f00
 
-border-size = 4
+border-top-size = 6
+border-left-size = 12
+border-right-size = 12
+border-bottom-size = 0
 border-color = #00000000
 
-padding-left = 0
+;padding-left = 2
 padding-right = 2
 
 module-margin-left = 1
-module-margin-right = 2
+module-margin-right = 1
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
@@ -61,24 +65,26 @@ font-5 = Font Awesome 5 Brands: pixelsize=11
 font-6 = Material Icons: style=Regular: pixelsize=13;
 
 ;modules-left = i3 xwindow
-modules-left = i3 xwindow spotify
+modules-left = i3 spotify
 ;modules-center = mpd
 ;modules-center = mpd memory cpu temperature
 modules-center = memory cpu temperature
-modules-right = xbacklight pulseaudio-control battery date powermenu
+modules-right = xbacklight pulseaudio-control date
+;modules-right = xbacklight pulseaudio-control battery date tray powermenu
 ;modules-right = xbacklight pulseaudio xkeyboard battery date powermenu
 ;modules-right = filesystem xbacklight pulseaudio xkeyboard eth battery date powermenu
 ;modules-right = filesystem xbacklight pulseaudio xkeyboard wlan eth battery date powermenu
 ;modules-right = filesystem xbacklight pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
 ;modules-right = filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
 
-;tray-position = center
 tray-position = right
-tray-padding = 2
+tray-padding = 3
+tray-offset-x = 8
+;tray-detached = true
 ;tray-background = #b3a1e6
 
 ;wm-restack = bspwm
-wm-restack = i3
+;wm-restack = i3
 
 ;override-redirect = true
 
@@ -216,9 +222,10 @@ ramp-4 = 🌑
 [module/xbacklight]
 type = internal/xbacklight
 
-output = DP-1-1
-format = <label> <bar>
-label = BL
+output = eDP-1
+;format = <label> <bar>
+format =  <label>
+label = %percentage%
 
 bar-width = 10
 bar-indicator = |
@@ -472,7 +479,7 @@ label-foreground = ${colors.foreground}
 # You can copy-paste your options for each possible action, which is more
 # trouble-free but repetitive, or apply only the relevant ones (for example
 # --sink-blacklist is only needed for next-sink).
-exec = pulseaudio-control --icons-volume " , " --icon-muted " " --sink-nicknames-from "device.description" --sink-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:Speakers" --sink-nickname "alsa_output.usb-Conexant_Generic_7.1CH_Gaming_Headset_000000000000-00.analog-stereo: Headphones" listen
+exec = pulseaudio-control --format '$SINK_NICKNAME ${VOL_LEVEL}' --sink-nicknames-from "device.description" --sink-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo: " --sink-nickname "alsa_output.usb-Conexant_Generic_7.1CH_Gaming_Headset_000000000000-00.analog-stereo: " --sink-nickname "bluez_output.E8_EC_A3_9C_B5_D2.a2dp-sink: " listen
 ;click-right = exec pavucontrol &
 ;click-left = pulseaudio-control togmute
 ;click-middle = pulseaudio-control next-sink

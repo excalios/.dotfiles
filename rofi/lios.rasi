@@ -52,6 +52,8 @@
 
     transparent: rgba( 	15, 17, 27, 0);
     font: "Source Code Pro 10";
+
+    text-color: @foreground;
 }
 window {
     location: center;

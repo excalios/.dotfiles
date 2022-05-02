@@ -9,7 +9,7 @@
             }
         }
     },
-    "coc.preferences.formatOnType": true,
+    //"coc.preferences.formatOnType": true,
     "coc.preferences.formatOnSaveFiletypes": [
         "blade",
         "javascript",
@@ -18,7 +18,8 @@
         "cpp",
         "typescript",
         "typescriptreact",
-        "vue"
+        "vue",
+        "go"
     ],
     "clangd.semanticHighlighting": true,
     "coc.preferences.rootPatterns": [
@@ -39,7 +40,12 @@
     "prettier.singleQuote": true,
     "prettier.trailingComma": "es5",
     "prettier.arrowParens": "avoid",
-    "prettier.tabWidth": 2,
-    "prettier.useTabs": false
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": false,
     //"html.autoClosingTags": true
+    "tsserver.log": "verbose",
+    "tsserver.trace.server": "verbose",
+    "diagnostic.refreshOnInsertMode": true,
+    "coc.preferences.watchmanPath": "asdf",
+    "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin/clangd"
 }
