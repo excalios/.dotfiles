@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions nvm gh golang archlinux)
+plugins=(git nvm gh golang archlinux zsh-vi-mode zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -180,3 +180,5 @@ export SSH_ASKPASS=ssh-askpass
 #[ -f ~/.keychain/$HOSTNAME-sh-gpg ] && . ~/.keychain/$HOSTNAME-sh-gpg 2>/dev/null
 
 eval $(keychain --eval --quiet ~/.ssh/id_rsa)
+
+ZVM_VI_SURROUND_BINDKEY=s-prefix
