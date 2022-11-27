@@ -32,7 +32,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- lockColor
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/wallhaven-6oddjq.jpg
+exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/wallhaven-28kdom.png
 #exec_always --no-startup-id feh --bg-scale --randomize ~/Pictures/Wallpapers/purp/*
 exec_always --no-startup-id $HOME/.config/i3/compton.sh
 exec --no-startup-id i3-battery-popup -L 20 -t 10s -n
@@ -58,7 +58,7 @@ new_window pixel 1
 new_float pixel 1
 
 # Remove window borders and set gaps
-#for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 1
 gaps inner 10
 
 #smart_gaps on

@@ -12,7 +12,7 @@ call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'nvim-orgmode/orgmode'
 
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 "Plug 'mcchrish/nnn.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -23,12 +23,17 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'scrooloose/nerdcommenter'
 
+Plug 'tpope/vim-surround'
+
 "Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Go Language
 Plug 'fatih/vim-go'
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
 
 " Laravel plugs
 " Enable only when developing laravel
@@ -38,28 +43,29 @@ Plug 'noahfrederick/vim-composer'     "|
 Plug 'noahfrederick/vim-laravel'
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'onsails/lspkind-nvim'
-Plug 'hrsh7th/nvim-cmp'
 Plug 'prabirshrestha/async.vim'
 
 Plug 'windwp/nvim-autopairs'
 
 " LuaSnip
-"Plug 'L3MON4D3/LuaSnip'
-"Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
 
 " ultisnips
-Plug 'SirVer/ultisnips'
-Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+"Plug 'SirVer/ultisnips'
+"Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 "Plug 'habamax/vim-godot'
 
 " Git
 Plug 'ThePrimeagen/git-worktree.nvim'
 Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim'
 "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 "Plug 'junegunn/fzf.vim'
 "Plug 'stsewd/fzf-checkout.vim'
@@ -80,15 +86,18 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'nvim-telescope/telescope-github.nvim'
-Plug 'fannheyward/telescope-coc.nvim'
+"Plug 'fannheyward/telescope-coc.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 Plug 'ThePrimeagen/harpoon'
 
 Plug 'sheerun/vim-polyglot'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-"Plug 'mattn/emmet-vim'
+"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'commit': '4cccb6f'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }  " We recommend updating the parsers on update
+
+Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'mattn/emmet-vim'
 "Plug 'windwp/nvim-ts-autotag'
 
 " post install (yarn install | npm install) then load plugin only for editing supported files
@@ -99,12 +108,15 @@ Plug 'prettier/vim-prettier', {
 " Color schemes
 "Plug 'morhetz/gruvbox'
 "Plug 'colepeters/spacemacs-theme.vim'
-Plug 'pineapplegiant/spaceduck'
+"Plug 'pineapplegiant/spaceduck'
 "Plug 'tomasr/molokai'
 "Plug 'sainnhe/gruvbox-material'
+Plug 'folke/tokyonight.nvim'
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+
+Plug 'nvim-lualine/lualine.nvim'
 
 
 " Time Tracker for Productivity
@@ -140,13 +152,13 @@ call plug#end()
 "colorscheme gruvbox-material
 
 " Spaceduck
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
+"if exists('+termguicolors')
+  "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  "set termguicolors
+"endif
 
-colorscheme spaceduck
+"colorscheme spaceduck
 
 " Molokai
 "colorscheme molokai
@@ -158,9 +170,11 @@ colorscheme spaceduck
 
 "hi Normal guibg=black ctermbg=black
 
+colorscheme tokyonight-moon
+
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+"command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " Debugger mappings
 let g:vimspector_enable_mappings = 'HUMAN'
@@ -300,8 +314,8 @@ set smartindent
 set number
 set relativenumber
 set noerrorbells
-set tabstop=4 softtabstop=4
-set shiftwidth=4
+set tabstop=2 softtabstop=2
+set shiftwidth=2
 "autocmd FileType gdscript3 set expandtab&
 "autocmd FileType gd set expandtab&
 set expandtab
@@ -312,6 +326,7 @@ set noswapfile
 set nobackup
 
 set colorcolumn=80
+set inccommand=split
 
 "set termguicolors
 "set foldmethod=syntax
@@ -356,6 +371,7 @@ nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
 
 let test#strategy = "neovim"
+let g:test#preserve_screen = 1
 let test#neovim#term_position = "vert"
 let g:test#echo_command = 0
 
@@ -394,6 +410,7 @@ endif
 " Find files in orgs folder
 nnoremap <leader>of <cmd>lua require('excalios.telescope').of()<cr>
 nnoremap <leader>ff <cmd>lua require('excalios.telescope').ff()<cr>
+
 "nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('excalios.telescope').fg()<cr>
 "nnoremap <leader>fg <cmd>lua require('telescope.builtin').git_files()<cr>
@@ -445,7 +462,7 @@ nnoremap <silent><A-s> :lua require("harpoon.ui").nav_file(4)<CR>
 
 "}}}
 
-" treesitter {{{
+"" treesitter {{{"",
 
 lua << EOF
 require'nvim-treesitter.configs'.setup { 
@@ -458,12 +475,13 @@ EOF
 
 " }}}
 
-" airline {{{
+"" airline {{{"",
 
-let g:airline_theme = 'spaceduck'
+"let g:airline_theme = 'spaceduck'
 "let g:airline_theme = 'gruvbox_material'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+"let g:airline_theme = 'tokyonight'
+"let g:airline_powerline_fonts = 1
+"let g:airline#extensions#tabline#enabled = 1
 
 " }}}
 
@@ -525,7 +543,7 @@ autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
 " Go Language {{{
 
 " Set to spaces instead of indent
-autocmd BufNewFile,BufRead *.go setlocal expandtab tabstop=4 shiftwidth=4 
+autocmd BufNewFile,BufRead *.go setlocal expandtab tabstop=2 shiftwidth=2
 
 " Set tabs line
 autocmd BufNewFile,BufRead *.go setlocal list lcs=tab:\|\ 
@@ -572,4 +590,15 @@ lua require('excalios.git-worktree')
 
 " }}}
 
+" Git Worktree {{{
+
+lua require('excalios.lualine')
+"lua require('excalios.evil-lualine')
+
+" }}}
+
 let g:python3_host_prog='/usr/bin/python3'
+
+let g:flutter_show_log_on_run=0
+
+"autocmd BufRead,BufNewFile *.blade.php set filetype=blade

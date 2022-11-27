@@ -77,7 +77,11 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git nvm gh golang archlinux zsh-vi-mode zsh-syntax-highlighting zsh-autosuggestions)
+
+#plugins=(git nvm gh golang archlinux zsh-vi-mode zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git nvm gh golang archlinux zsh-syntax-highlighting zsh-autosuggestions)
+
+plugins+=(nx-completion)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -118,7 +122,7 @@ alias ni=nvim
 alias n3=nnn
 
 # enable vi mode
-#bindkey -v
+bindkey -v
 
 export EDITOR='nvim'
 export TERMINAL='kitty'
@@ -182,3 +186,17 @@ export SSH_ASKPASS=ssh-askpass
 eval $(keychain --eval --quiet ~/.ssh/id_rsa)
 
 ZVM_VI_SURROUND_BINDKEY=s-prefix
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+alias ls='ls --color=auto'
+PS1='[\u@\h \W]\$ '
+export PATH="$PATH:$HOME/.config/composer/vendor/bin"
+
+# Flutter
+export PATH="$PATH:$HOME/dev/flutter/flutter/bin"
+
+# pnpm
+export PNPM_HOME="/home/v01d/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
