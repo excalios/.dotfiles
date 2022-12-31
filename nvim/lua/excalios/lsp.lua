@@ -116,7 +116,7 @@ require'lspconfig'.emmet_ls.setup(config())
 --require'lspconfig'.cssls.setup(config())
 --require'lspconfig'.cssmodules_ls.setup(config())
 
---require'lspconfig'.intelephense.setup(config())
+require'lspconfig'.intelephense.setup(config())
 
 --require'lspconfig'.gdscript.setup(config())
 

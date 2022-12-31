@@ -52,6 +52,8 @@ Plug 'prabirshrestha/async.vim'
 
 Plug 'windwp/nvim-autopairs'
 
+Plug 'chrisbra/csv.vim'
+
 " LuaSnip
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
@@ -601,4 +603,4 @@ let g:python3_host_prog='/usr/bin/python3'
 
 let g:flutter_show_log_on_run=0
 
-"autocmd BufRead,BufNewFile *.blade.php set filetype=blade
+autocmd BufRead,BufNewFile *.blade.php set filetype=blade

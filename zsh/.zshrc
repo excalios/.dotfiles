@@ -200,3 +200,8 @@ export PATH="$PATH:$HOME/dev/flutter/flutter/bin"
 export PNPM_HOME="/home/v01d/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/v01d/dev/GCloud/google-cloud-sdk/path.zsh.inc' ]; then . '/home/v01d/dev/GCloud/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/v01d/dev/GCloud/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/v01d/dev/GCloud/google-cloud-sdk/completion.zsh.inc'; fi
