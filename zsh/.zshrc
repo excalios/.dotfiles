@@ -79,7 +79,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 
 #plugins=(git nvm gh golang archlinux zsh-vi-mode zsh-syntax-highlighting zsh-autosuggestions)
-plugins=(git nvm gh golang archlinux zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git nvm gh golang archlinux zsh-syntax-highlighting zsh-autosuggestions z)
 
 plugins+=(nx-completion)
 
