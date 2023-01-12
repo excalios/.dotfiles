@@ -68,6 +68,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'ThePrimeagen/git-worktree.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'lewis6991/gitsigns.nvim'
 "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 "Plug 'junegunn/fzf.vim'
 "Plug 'stsewd/fzf-checkout.vim'
@@ -596,6 +597,12 @@ lua require('excalios.git-worktree')
 
 lua require('excalios.lualine')
 "lua require('excalios.evil-lualine')
+
+" }}}
+
+" Gitsigns {{{
+
+lua require('excalios.gitsigns')
 
 " }}}
 
