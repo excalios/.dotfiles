@@ -10,27 +10,18 @@ set nocompatible
 
 call plug#begin(stdpath('data') . '/plugged')
 
-Plug 'nvim-orgmode/orgmode'
-
-"Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-"Plug 'mcchrish/nnn.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-" This devicon provide icons to nerdtree and airlines
+Plug 'johnstef99/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
-" This devicon provide icons to telescope
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'scrooloose/nerdcommenter'
 
 Plug 'tpope/vim-surround'
 
 "Plug 'Yggdroot/indentLine'
-Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'HampusHauffman/block.nvim'
 
 " Go Language
 Plug 'fatih/vim-go'
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
@@ -47,8 +38,17 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'onsails/lspkind-nvim'
 Plug 'prabirshrestha/async.vim'
+
+Plug 'folke/trouble.nvim'
+
+Plug 'theprimeagen/refactoring.nvim'
+
+" Leap
+Plug 'tpope/vim-repeat'
+Plug 'ggandor/leap.nvim'
 
 Plug 'windwp/nvim-autopairs'
 
@@ -62,7 +62,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 "Plug 'SirVer/ultisnips'
 "Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
-"Plug 'habamax/vim-godot'
+Plug 'habamax/vim-godot'
 
 " Git
 Plug 'ThePrimeagen/git-worktree.nvim'
@@ -75,6 +75,9 @@ Plug 'lewis6991/gitsigns.nvim'
 
 " Github
 "Plug 'skanehira/gh.vim'
+
+" History
+Plug 'mbbill/undotree'
 
 " Debugger
 Plug 'puremourning/vimspector'
@@ -96,7 +99,6 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'ThePrimeagen/harpoon'
 
 Plug 'sheerun/vim-polyglot'
-"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'commit': '4cccb6f'}  " We recommend updating the parsers on update
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }  " We recommend updating the parsers on update
 
 Plug 'nvim-treesitter/nvim-treesitter-context'
@@ -127,6 +129,8 @@ Plug 'wakatime/vim-wakatime'
 
 " Habits
 Plug 'rcarriga/nvim-notify'
+
+Plug 'Stoozy/vimcord'
 
 call plug#end()
 
@@ -179,10 +183,16 @@ let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
 "command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
+let g:python3_host_prog = '/opt/homebrew/bin/python3.11'
+
 " Debugger mappings
 let g:vimspector_enable_mappings = 'HUMAN'
 nnoremap <leader>ds :call vimspector#Reset()<CR>
 nmap <Leader>db <Plug>VimspectorBalloonEval
+xmap <Leader>db <Plug>VimspectorBalloonEval
+nmap <Leader>ds <Plug>VimspectorContinue
+let g:vimspector_base_dir='/Users/v01d/.local/share/nvim/plugged/vimspector'
+
 let g:maximizer_set_default_mapping = 0
 nnoremap <A-m> :MaximizerToggle!<CR>
 
@@ -356,15 +366,6 @@ nmap <leader>F :Format<CR>
 
 " }}}
 
-" nerdtree{{{
-map <C-n> :NERDTreeToggle<CR>
-map <C-_> <plug>NERDCommenterToggle
-"}}}
-
-" nnn{{{
-let g:nnn#layout = { 'window': { 'width': 0.3, 'height': 0.6, 'highlight': 'Debug' } }
-"}}}
-
 " vim-test{{{
 
 nmap <silent> t<C-n> :TestNearest<CR>
@@ -381,30 +382,12 @@ let g:test#echo_command = 0
 let test#go#gotest#options = '-v'
 
 let test#php#phpunit#executable = 'php artisan test'
+"let test#javascript#nx#options = '--skip-nx-cache --verbose'
 
 if has('nvim')
   tmap <C-o> <C-\><C-n>
 endif
 
-"}}}
-
-"ctrlp Fuzzy{{{
-"let g:ctrlp_map = '<c-p>'
-"let g:ctrlp_cmd = 'CtrlP'
-"let g:ctrlp_working_path_mode = 'ra'
-
-"let g:ctrlp_show_hidden = 1
-
-"set wildignore+=*/.git/*,*/node_modules/*
-"let g:ctrlp_custom_ignore = '\v[\/]\.(git|node_modules)$'
-"let g:ctrlp_custom_ignore = {
-  "\ 'dir':  '\v[\/]\.(git|node_modules)$',
-  "\ }
-"let g:ctrlp_root_markers = ['CMakeLists.txt', 'artisan', "package.json"]
-"}}}
-
-": coc config {{{
-"source ~/.config/nvim/coc.vim
 "}}}
 
 " telescope{{{
@@ -581,19 +564,13 @@ lua require('excalios.notify')
 
 " }}}
 
-" nvim orgmode {{{
-
-lua require('excalios.orgmode')
-
-" }}}
-
 " Git Worktree {{{
 
 lua require('excalios.git-worktree')
 
 " }}}
 
-" Git Worktree {{{
+" Lualine {{{
 
 lua require('excalios.lualine')
 "lua require('excalios.evil-lualine')
@@ -606,7 +583,33 @@ lua require('excalios.gitsigns')
 
 " }}}
 
-let g:python3_host_prog='/usr/bin/python3'
+" Leap {{{
+
+lua require('excalios.leap')
+
+" }}}
+
+" Undo History {{{
+
+lua << EOF
+vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
+EOF
+
+" }}}
+
+" Trouble {{{
+
+lua require('excalios.trouble')
+
+" }}}
+
+" Refactoring {{{
+
+lua require('excalios.refactoring')
+
+" }}}
+
+"let g:python3_host_prog='/usr/bin/python3'
 
 let g:flutter_show_log_on_run=0
 
