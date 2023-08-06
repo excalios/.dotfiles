@@ -18,7 +18,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 
 "Plug 'Yggdroot/indentLine'
-Plug 'HampusHauffman/block.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Go Language
 Plug 'fatih/vim-go'
