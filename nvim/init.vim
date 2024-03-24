@@ -10,12 +10,15 @@ set nocompatible
 
 call plug#begin(stdpath('data') . '/plugged')
 
+Plug 'github/copilot.vim'
+
 Plug 'johnstef99/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'scrooloose/nerdcommenter'
 
 Plug 'tpope/vim-surround'
+Plug 'johmsalas/text-case.nvim'
 
 "Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -25,13 +28,18 @@ Plug 'fatih/vim-go'
 
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
+Plug 'udalov/kotlin-vim'
+
+Plug 'jidn/vim-dbml'
 
 " Laravel plugs
 " Enable only when developing laravel
-Plug 'tpope/vim-dispatch'             "| Optional
-Plug 'tpope/vim-projectionist'        "|
-Plug 'noahfrederick/vim-composer'     "|
-Plug 'noahfrederick/vim-laravel'
+"Plug 'tpope/vim-dispatch'             "| Optional
+"Plug 'tpope/vim-projectionist'        "|
+"Plug 'noahfrederick/vim-composer'     "|
+"Plug 'noahfrederick/vim-laravel'
+
+Plug 'jpalardy/vim-slime'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-cmp'
@@ -52,7 +60,7 @@ Plug 'ggandor/leap.nvim'
 
 Plug 'windwp/nvim-autopairs'
 
-Plug 'chrisbra/csv.vim'
+"Plug 'chrisbra/csv.vim'
 
 " LuaSnip
 Plug 'L3MON4D3/LuaSnip'
@@ -95,6 +103,7 @@ Plug 'nvim-telescope/telescope-github.nvim'
 "Plug 'fannheyward/telescope-coc.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'nvim-telescope/telescope-media-files.nvim'
 
 Plug 'ThePrimeagen/harpoon'
 
@@ -113,7 +122,7 @@ Plug 'prettier/vim-prettier', {
 " Color schemes
 "Plug 'morhetz/gruvbox'
 "Plug 'colepeters/spacemacs-theme.vim'
-"Plug 'pineapplegiant/spaceduck'
+"Plug 'pineapplegiant/spaceduck', { 'branch': 'dev' }
 "Plug 'tomasr/molokai'
 "Plug 'sainnhe/gruvbox-material'
 Plug 'folke/tokyonight.nvim'
@@ -130,7 +139,7 @@ Plug 'wakatime/vim-wakatime'
 " Habits
 Plug 'rcarriga/nvim-notify'
 
-Plug 'Stoozy/vimcord'
+"Plug 'Stoozy/vimcord'
 
 call plug#end()
 
@@ -351,9 +360,6 @@ set inccommand=split
         "\ foldlevel=2
 "augroup end
 
-nnoremap <F1> :!npm test<CR>
-"nnoremap <F2> :!npm run test-report<CR>
-nmap <leader>g <Plug>(coc-git-commit)
 nmap <leader>v :vert belowright sb<CR>
 nmap <C-h> :bprevious<CR>
 nmap <C-l> :bnext<CR>
@@ -365,6 +371,13 @@ nmap <leader>F :Format<CR>
 
 
 " }}}
+
+" nerdcomment{{{
+
+map <C-_> <plug>NERDCommenterToggle
+
+"}}}
+
 
 " vim-test{{{
 
@@ -393,9 +406,9 @@ endif
 " telescope{{{
 
 " Using lua functions
-" Find files in orgs folder
-nnoremap <leader>of <cmd>lua require('excalios.telescope').of()<cr>
+lua require('excalios.telescope')
 nnoremap <leader>ff <cmd>lua require('excalios.telescope').ff()<cr>
+nnoremap <leader>fm <cmd>lua require('excalios.telescope').fm()<cr>
 
 "nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('excalios.telescope').fg()<cr>
@@ -412,7 +425,6 @@ nnoremap <leader>tgs <cmd>lua require('telescope.builtin').git_status()<cr>
 nnoremap <leader>tgc <cmd>lua require('telescope.builtin').git_commits()<cr>
 
 " File Browser
-nnoremap <leader>ogf <cmd>lua require('excalios.telescope').ogf()<cr>
 nnoremap <leader>tgf <cmd>lua require('excalios.telescope').tgf()<cr>
 "nnoremap <leader>tgf <cmd>lua require('telescope.builtin').file_browser()<cr>
 
@@ -434,17 +446,11 @@ nnoremap <leader>gr <cmd>lua require('telescope').extensions.gh.run()<cr><cr>
 
 nnoremap <silent><leader>a :lua require("harpoon.mark").add_file()<CR>
 nnoremap <silent><C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>
-"nnoremap <silent><leader>tc :lua require("harpoon.cmd-ui").toggle_quick_menu()<CR>
 
 nnoremap <silent><A-h> :lua require("harpoon.ui").nav_file(1)<CR>
 nnoremap <silent><A-t> :lua require("harpoon.ui").nav_file(2)<CR>
 nnoremap <silent><A-n> :lua require("harpoon.ui").nav_file(3)<CR>
 nnoremap <silent><A-s> :lua require("harpoon.ui").nav_file(4)<CR>
-
-"nnoremap <silent><leader>tu :lua require("harpoon.term").gotoTerminal(1)<CR>
-"nnoremap <silent><leader>te :lua require("harpoon.term").gotoTerminal(2)<CR>
-"nnoremap <silent><leader>cu :lua require("harpoon.term").sendCommand(1, 1)<CR>
-"nnoremap <silent><leader>ce :lua require("harpoon.term").sendCommand(1, 2)<CR>
 
 "}}}
 
@@ -480,12 +486,16 @@ EOF
 lua << EOF
 vim.opt.list = true
 
-require("indent_blankline").setup {
+require("ibl").setup {
     --space_char_blankline = " ",
-    show_trailing_blankline_indent = false,
-    show_first_indent_level = false,
-    show_current_context = true,
+    --show_trailing_blankline_indent = false,
+    --show_first_indent_level = false,
+    --show_current_context = true,
     --show_current_context_start = true,
+    whitespace = {
+      remove_blankline_trail = true,
+    },
+    scope = { enabled = true },
 }
 EOF
 
@@ -518,7 +528,7 @@ EOF
 
 " LSP {{{
 
-set completeopt=menuone,noinsert,noselect
+set completeopt=menu,menuone,noselect
 
 lua require('excalios.lsp')
 
@@ -527,6 +537,8 @@ autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
 " }}}
 "
 " Go Language {{{
+
+nnoremap <leader>gor :GoRun<CR>
 
 " Set to spaces instead of indent
 autocmd BufNewFile,BufRead *.go setlocal expandtab tabstop=2 shiftwidth=2
@@ -546,7 +558,7 @@ let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
-"let g:go_highlight_operators = 1
+let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_generate_tags = 0
 let g:go_highlight_format_strings = 1
@@ -609,8 +621,36 @@ lua require('excalios.refactoring')
 
 " }}}
 
+" Text Case {{{
+
+lua require('excalios.text-case')
+
+" }}}
+
+" Copilot {{{
+
+lua require('excalios.copilot')
+
+" }}}
+
+let g:slime_target = "tmux"
+let g:slime_python_ipython = 1
+
 "let g:python3_host_prog='/usr/bin/python3'
 
 let g:flutter_show_log_on_run=0
 
 autocmd BufRead,BufNewFile *.blade.php set filetype=blade
+
+" When using `dd` in the quickfix list, remove the item from the quickfix list.
+function! RemoveQFItem()
+  let curqfidx = line('.') - 1
+  let qfall = getqflist()
+  call remove(qfall, curqfidx)
+  call setqflist(qfall, 'r')
+  execute curqfidx + 1 . "cfirst"
+  :copen
+endfunction
+:command! RemoveQFItem :call RemoveQFItem()
+" Use map <buffer> to only map dd in the quickfix window. Requires +localmap
+autocmd FileType qf map <buffer> dd :RemoveQFItem<cr>
