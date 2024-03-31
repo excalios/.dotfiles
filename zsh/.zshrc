@@ -117,19 +117,10 @@ bindkey -v
 
 export EDITOR='nvim'
 export TERMINAL='kitty'
-export TERM='xterm-256color'
+#export TERM='xterm-256color'
 
 export GOPATH=$HOME/go
 export PATH="$HOME/go/bin:$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"
-
-export NNN_FCOLORS='c1e26d6b006033f7c6d6abc4'
-export NNN_OPENER='/home/v01d/.config/nnn/plugins/nuke'
-export NNN_PLUG='v:preview-tui-ext;p:preview-tui'
-export NNN_FIFO='/tmp/nnn.fifo'
-export NNN_OPTS='cox'
-export GUI=1
-export ICONLOOKUP=1
-export PAGER='less -R'
 
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH:/usr/local/go/bin"

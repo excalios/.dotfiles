@@ -4,6 +4,7 @@ return {
     name = "catppuccin",
     priority = 1000,
     opts = {
+      flavour = "macchiato", -- latte, frappe, macchiato, mocha
       integrations = {
         gitsigns = true,
         harpoon = true,
@@ -40,17 +41,25 @@ return {
         lsp_trouble = true,
         gitgutter = true,
       }
-    }
+    },
+    enabled = true,
   },
 
-  --{
-    --"ellisonleao/gruvbox.nvim",
-    --priority = 1000
-  --},
+  {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'gruvbox'
+    end,
+    enabled = false,
+  },
 
-  --{
-  --"folke/tokyonight.nvim",
-    --lazy = false,
-    --priority = 1000,
-  --}
+  {
+    "folke/tokyonight.nvim",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'tokyonight'
+    end,
+    enabled = false,
+  }
 }

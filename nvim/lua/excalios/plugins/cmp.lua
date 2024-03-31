@@ -22,7 +22,7 @@ local lspconfig = function()
     buffer = "[Buffer]",
     nvim_lsp = "[LSP]",
     nvim_lua = "[Lua]",
-    cmp_tabnine = "[TN]",
+    --cmp_tabnine = "[TN]",
     path = "[Path]",
   }
 
@@ -38,8 +38,8 @@ local lspconfig = function()
   end
 
   -- Auto pair
-  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-  cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+  --local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+  --cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
 
   local compare = require('cmp.config.compare')
 
@@ -90,7 +90,7 @@ local lspconfig = function()
     sorting = {
       priority_weight = 2,
       comparators = {
-        require('cmp_tabnine.compare'),
+        --require('cmp_tabnine.compare'),
         compare.offset,
         compare.exact,
         compare.score,
@@ -103,7 +103,7 @@ local lspconfig = function()
     },
       sources = {
           { name = 'nvim_lsp_signature_help' },
-          { name = "cmp_tabnine" },
+          --{ name = "cmp_tabnine" },
           { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'buffer' },
@@ -137,8 +137,9 @@ return {
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'hrsh7th/cmp-buffer' },
       {
-       'tzachar/cmp-tabnine',
-       build = './install.sh',
+        'tzachar/cmp-tabnine',
+        build = './install.sh',
+        enabled = false
       },
       { 'hrsh7th/cmp-nvim-lsp-signature-help' },
       { 'onsails/lspkind-nvim' },
@@ -148,7 +149,8 @@ return {
       {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
-        config = true
+        config = true,
+        enabled = false,
       }
     },
     config = lspconfig,

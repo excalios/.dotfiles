@@ -19,6 +19,9 @@ return {
             ensure_installed = {
               "typescript",
               "go",
+              "lua",
+              "vim",
+              "sql"
             }
           }
         end,
