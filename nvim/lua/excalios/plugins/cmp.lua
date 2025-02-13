@@ -8,13 +8,6 @@ local lspconfig = function()
   local cmp = require('cmp')
   local luasnip = require("luasnip")
 
-  cmp.setup({
-      sources={
-        { name = "nvim_lsp" },
-        { name = 'nvim_lsp_signature_help' },
-      }
-  })
-
   local lspkind = require('lspkind')
   lspkind.mode = 'text'
 
@@ -42,50 +35,23 @@ local lspconfig = function()
   --cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
 
   local compare = require('cmp.config.compare')
+  local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
   cmp.setup({
       preselect = cmp.PreselectMode.None,
       snippet = {
           expand = function(args)
-               require('luasnip').lsp_expand(args.body)
+               luasnip.lsp_expand(args.body)
           end
       },
       mapping = {
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+          ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+          ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+          ["<C-Space>"] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.close(),
-          ["<CR>"] = cmp.mapping({
-             i = function(fallback)
-               if cmp.visible() and cmp.get_active_entry() then
-                 cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-               else
-                 fallback()
-               end
-             end,
-             s = cmp.mapping.confirm({ select = true }),
-             c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-          }),
        },
     sorting = {
       priority_weight = 2,
@@ -146,13 +112,20 @@ return {
       { 'prabirshrestha/async.vim' },
       { 'L3MON4D3/LuaSnip' },
       { 'saadparwaiz1/cmp_luasnip' },
-      {
-        'windwp/nvim-autopairs',
-        event = "InsertEnter",
-        config = true,
-        enabled = false,
-      }
+      --{
+        --'windwp/nvim-autopairs',
+        --event = "InsertEnter",
+        --config = true,
+        --enabled = false,
+      --}
     },
+    opts = function(_, opts)
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, {
+        name = "lazydev",
+        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+      })
+    end,
     config = lspconfig,
   },
 }

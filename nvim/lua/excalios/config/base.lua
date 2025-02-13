@@ -25,6 +25,10 @@ set.termguicolors = true
 set.lazyredraw = false
 
 -- read/write a .viminfo file, don't store more than 50 lines of registers
+set.swapfile = false
+set.backup = false
+set.undodir = os.getenv("HOME") .. "/.vim/undodir"
+set.undofile = true
 set.history = 50
 
 -- Show a few lines of context around the cursor
@@ -56,13 +60,33 @@ set.completeopt = {"menuone", "noselect"}
 
 set.list = true
 
-set.wrap = false
+set.wrap = true
+set.textwidth=0
+set.linebreak = true
+
 set.breakindent = true
 set.title = true
 
 vim.scriptencoding = "utf-8"
 set.encoding = "utf-8"
 set.fileencoding = "utf-8"
+
+set.conceallevel=1
+
+-- Markdown
+vim.api.nvim_create_augroup("MarkdownSettings", { clear = true })
+
+-- Set indentation to 2 spaces for Markdown files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.bo.expandtab = true  -- Use spaces instead of tabs
+    vim.bo.shiftwidth = 4    -- Number of spaces to use for each step of (auto)indent
+    vim.bo.softtabstop = 4   -- Number of spaces that a <Tab> counts for while performing editing operations
+    vim.bo.tabstop = 4       -- Number of spaces that a <Tab> in the file counts for
+  end,
+  group = "MarkdownSettings",
+})
 
 -- Prettier
 vim.g["prettier#autoformat"] = 1

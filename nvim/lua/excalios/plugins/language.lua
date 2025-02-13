@@ -1,5 +1,13 @@
 return {
   {
+    'echasnovski/mini.nvim',
+    version = false,
+    config = function()
+      require('mini.icons').setup()
+    end,
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter-context",
     dependencies = {
       {
@@ -39,18 +47,24 @@ return {
       mode = "workspace_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
     },
     keys = {
-      {"<leader>xx", "<cmd>TroubleToggle<cr>"},
+      {"<leader>xx", "<cmd>Trouble diagnostics toggle<cr>"},
     }
   },
 
     -- Specific Languages
 
-  { 'jpalardy/vim-slime' },
+  {
+    'jpalardy/vim-slime',
+    config = function()
+      vim.g["slime_target"] = "tmux"
+      vim.g["slime_bracketed_paste"] = 1
+    end,
+  },
 
   {
     "prettier/vim-prettier",
     build = "yarn workspaces focus",
-    ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "css", "less", "scss", "json", "graphql", "markdown", "vue", "yaml", "html" },
+    ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "css", "less", "scss", "json", "graphql", "vue", "yaml", "html" },
     config = function()
       vim.g["prettier#autoformat"] = 1
       vim.g["prettier#autoformat_require_pragma"] = 0
@@ -97,6 +111,18 @@ return {
   -- Godot
   {
     'habamax/vim-godot',
-    ft = { 'gd', 'gdscript3' },
+    dependencies = {
+      { 'tpope/vim-dispatch' },
+    },
+    ft = { 'gd', 'gdscript3', 'gdscript' },
+    config = function()
+      vim.cmd([[
+        augroup gdscript
+          autocmd!
+          autocmd FileType gdscript setlocal tabstop=4 shiftwidth=4
+        augroup END
+      ]])
+      vim.g["godot_executable"] = "/opt/homebrew/bin/Godot"
+    end
   },
 }

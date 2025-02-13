@@ -2,22 +2,31 @@ return {
   {
     'preservim/nerdcommenter',
     keys = {
-      { "<C-_>", "<Plug>NERDCommenterToggle", desc = "Comment" },
+      { "<C-_>", "<Plug>NERDCommenterToggle", desc = "Comment", mode={"n", "x"}},
     }
   },
 
   { 'tpope/vim-surround' },
 
   {
-    'johmsalas/text-case.nvim',
+    "johmsalas/text-case.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
-      vim.api.nvim_set_keymap('n', 'ga.', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
-      vim.api.nvim_set_keymap('v', 'ga.', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
-    end
+      require("textcase").setup({})
+      require("telescope").load_extension("textcase")
+    end,
+    keys = {
+      "ga", -- Default invocation prefix
+      { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "x" }, desc = "Text Case Telescope" },
+    },
   },
 
   {
     'theprimeagen/refactoring.nvim',
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
     opts = {
       print_var_statements = {
           javascript = {
@@ -33,9 +42,13 @@ return {
     },
     keys = {
       {"<leader>rp", "<cmd>lua require('refactoring').debug.printf({below = false})<CR>", desc = "Refactor Print"},
-      {"<leader>rv", "<cmd>lua require('refactoring').debug.print_var()<CR>", desc = "Refactor Print Var"},
+      {"<leader>rv", "<cmd>lua require('refactoring').debug.print_var()<CR>", desc = "Refactor Print Var", mode={"n", "x"}},
       {"<leader>rc", "<cmd>lua require('refactoring').debug.cleanup({})<CR>", desc = "Refactor Cleanup"},
-    }
+      {"<leader>rr", ":Refactor ", desc = "Refactor Cleanup", mode={"n", "x"}},
+    },
+    config = function()
+      require("refactoring").setup()
+    end,
   },
 
   {
@@ -54,9 +67,13 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config  = function()
       local harpoon = require("harpoon")
-      harpoon:setup()
+      harpoon:setup({
+        settings = {
+          save_on_toggle = true,
+        }
+      })
 
-      vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+      vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
       vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
       vim.keymap.set("n", "<A-h>", function() harpoon:list():select(1) end)

@@ -82,7 +82,8 @@ return {
     lsp.dartls.setup(config())
     lsp.kotlin_language_server.setup(config())
 
-    lsp.tsserver.setup(config())
+    lsp.ts_ls.setup(config())
+    lsp.tailwindcss.setup(config())
     lsp.dockerls.setup(config())
     lsp.eslint.setup(config())
     lsp.yamlls.setup(config())

@@ -4,6 +4,7 @@ return {
     name = "catppuccin",
     priority = 1000,
     opts = {
+      transparent_background = true, -- disables setting the background color.
       flavour = "macchiato", -- latte, frappe, macchiato, mocha
       integrations = {
         gitsigns = true,

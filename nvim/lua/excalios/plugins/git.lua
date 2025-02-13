@@ -1,5 +1,5 @@
 return {
-  { 'ThePrimeagen/git-worktree.nvim', lazy = true },
+  { 'ThePrimeagen/git-worktree.nvim', lazy = true, enabled = false },
   {
     'tpope/vim-fugitive',
     keys = {
