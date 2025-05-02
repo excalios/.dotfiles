@@ -1,5 +1,5 @@
 return {
-  "epwalsh/obsidian.nvim",
+  "obsidian-nvim/obsidian.nvim",
   version = "*",
   lazy = false,
   ft = "markdown",
@@ -9,6 +9,7 @@ return {
   },
   dependencies = {
     "nvim-lua/plenary.nvim",
+    "OXY2DEV/markview.nvim"
   },
   keys = {
     { '<leader>of', "<cmd>ObsidianSearch<CR>", desc="[O]bsidian [F]ind files telescope" },

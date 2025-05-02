@@ -66,6 +66,9 @@ return {
     },
     config = function()
       require("neotest").setup({
+        consumers = {
+          timber = require("timber.watcher.sources.neotest").consumer,
+        },
         adapters = {
           require("neotest-golang")(configGoTest), -- Registration
         },

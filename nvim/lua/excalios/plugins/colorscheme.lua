@@ -15,7 +15,9 @@ return {
             scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
             colored_indent_levels = false,
         },
+        neotest = true,
         cmp = true,
+        copilot_vim = true,
         native_lsp = {
             enabled = true,
             virtual_text = {
@@ -34,6 +36,7 @@ return {
                 background = true,
             },
         },
+        nvim_surround = true,
         treesitter = true,
         treesitter_context = true,
         telescope = {

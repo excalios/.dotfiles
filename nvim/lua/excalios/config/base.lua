@@ -99,3 +99,5 @@ vim.g["vimspector_enable_mappings"] = "HUMAN"
 vim.g["maximizer_set_default_mapping"] = 0
 
 vim.g["python3_host_prog"] = "/opt/homebrew/bin/python3.11"
+
+vim.o.grepprg = "rg --vimgrep --no-heading --smart-case" -- Use ripgrep

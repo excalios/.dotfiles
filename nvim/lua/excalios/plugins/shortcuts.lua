@@ -1,9 +1,16 @@
 return {
+  --{
+    --'preservim/nerdcommenter',
+    --keys = {
+      --{ "<C-_>", "<Plug>NERDCommenterToggle", desc = "Comment", mode={"n", "x"}},
+    --}
+  --},
+
   {
-    'preservim/nerdcommenter',
-    keys = {
-      { "<C-_>", "<Plug>NERDCommenterToggle", desc = "Comment", mode={"n", "x"}},
-    }
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has("nvim-0.10.0") == 1,
   },
 
   { 'tpope/vim-surround' },
@@ -47,8 +54,68 @@ return {
       {"<leader>rr", ":Refactor ", desc = "Refactor Cleanup", mode={"n", "x"}},
     },
     config = function()
-      require("refactoring").setup()
+      require("refactoring").setup({})
     end,
+  },
+
+  {
+    "Goose97/timber.nvim",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    keys = {
+      { "gls", "<cmd>lua require('timber.actions').insert_log({ templates = { before = 'default', after = 'default' }, position = 'surround' })<CR>", desc = "Insert Log Statement" },
+      { "glc", "<cmd>lua require('timber.actions').clear_log_statements({ global = false })<CR>", desc = "Clear Log Statements" },
+      { "glC", "<cmd>lua require('timber.actions').clear_log_statements({ global = true })<CR>", desc = "Clear Log Statements (Global)" },
+      { "glf", "<cmd>lua require('timber.actions').search_log_statements()<CR>", desc = "Search Log Statements" },
+      { "glt", "<cmd>lua require('timber.actions').insert_log({ templates = { before = 'time_start', after = 'time_end' }, position = 'surround', })<CR>", desc = "Calculate Time and log" },
+      { "glOf", "<cmd>lua require('timber.buffers').open_float()<CR>", desc = "Open log result float window" },
+      { "glOs", "<cmd>lua require('timber.summary').open({ focus = true })<CR>", desc = "Open log result float window" },
+    },
+    config = function()
+        local opts = {
+          log_templates = {
+            time_start = {
+              python = {
+                [[start_time = time.time()]],
+                -- [[print(f"%log_marker %filename %line_number %watcher_marker_start start_time = {start_time} %watcher_marker_end")]],
+                auto_import = "import time",
+              }
+            },
+            time_end = {
+              python = [[print("%log_marker %filename %line_number Time taken to run:", time.time() - start_time)]],
+            },
+            default = {
+              python = [[print(f"%log_marker %watcher_marker_start {%log_target=} %watcher_marker_end")]],
+            },
+            plain = {
+              python = [[print(f"%log_marker %filename %line_number")]],
+            },
+          },
+          batch_log_templates = {
+            default = {
+              python = [[print(f"%log_marker %repeat<{%log_target=}><, >")]],
+            },
+          },
+          log_marker = "🪵", -- Or any other string, e.g: MY_LOG
+          log_watcher = {
+            enabled = true,
+            -- A table of source id and source configuration
+            sources = {
+                log_file = {
+                    type = "filesystem",
+                    name = "Log file",
+                    path = "/tmp/debug.log",
+                },
+                neotest = {
+                    -- Test runner
+                    type = "neotest",
+                    name = "Neotest",
+                },
+            },
+          }
+        }
+        require("timber").setup(opts)
+    end
   },
 
   {
