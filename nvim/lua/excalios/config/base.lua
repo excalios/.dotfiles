@@ -60,7 +60,7 @@ set.completeopt = {"menuone", "noselect"}
 
 set.list = true
 
-set.wrap = true
+set.wrap = false
 set.textwidth=0
 set.linebreak = true
 

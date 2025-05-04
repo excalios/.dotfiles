@@ -44,26 +44,27 @@ return {
         },
         lsp_trouble = true,
         gitgutter = true,
+        markdown = true,
       }
     },
     enabled = true,
   },
 
-  {
-    "ellisonleao/gruvbox.nvim",
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'gruvbox'
-    end,
-    enabled = false,
-  },
-
-  {
-    "folke/tokyonight.nvim",
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'tokyonight'
-    end,
-    enabled = false,
-  }
+  -- {
+  --   "ellisonleao/gruvbox.nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'gruvbox'
+  --   end,
+  --   enabled = false,
+  -- },
+  --
+  -- {
+  --   "folke/tokyonight.nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'tokyonight'
+  --   end,
+  --   enabled = false,
+  -- }
 }
