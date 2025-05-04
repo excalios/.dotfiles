@@ -60,7 +60,7 @@ set.completeopt = {"menuone", "noselect"}
 
 set.list = true
 
-set.wrap = false
+set.wrap = true
 set.textwidth=0
 set.linebreak = true
 
@@ -74,19 +74,39 @@ set.fileencoding = "utf-8"
 set.conceallevel=1
 
 -- Markdown
-vim.api.nvim_create_augroup("MarkdownSettings", { clear = true })
+-- vim.api.nvim_create_augroup("MarkdownSettings", { clear = true })
 
 -- Set indentation to 2 spaces for Markdown files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
-    vim.bo.expandtab = true  -- Use spaces instead of tabs
-    vim.bo.shiftwidth = 4    -- Number of spaces to use for each step of (auto)indent
-    vim.bo.softtabstop = 4   -- Number of spaces that a <Tab> counts for while performing editing operations
-    vim.bo.tabstop = 4       -- Number of spaces that a <Tab> in the file counts for
+    -- Indentation
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.expandtab = true
+
+    -- Visuals
+    vim.opt_local.wrap = false          -- Disable line wrapping
+    vim.opt_local.spell = false          -- Enable spell check
+    vim.opt_local.conceallevel = 2      -- Hide markdown formatting symbols (e.g., **bold**)
+    vim.opt_local.concealcursor = "nc"  -- Conceal in normal and command mode
+
+    -- Optional: show trailing whitespace for formatting awareness
+    vim.opt_local.list = true
+    vim.opt_local.listchars = { trail = "·", tab = "→ " }
   end,
-  group = "MarkdownSettings",
 })
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "markdown",
+--   callback = function()
+--     vim.bo.expandtab = true  -- Use spaces instead of tabs
+--     vim.bo.shiftwidth = 4    -- Number of spaces to use for each step of (auto)indent
+--     vim.bo.softtabstop = 4   -- Number of spaces that a <Tab> counts for while performing editing operations
+--     vim.bo.tabstop = 4       -- Number of spaces that a <Tab> in the file counts for
+--   end,
+--   group = "MarkdownSettings",
+-- })
 
 -- Prettier
 vim.g["prettier#autoformat"] = 1

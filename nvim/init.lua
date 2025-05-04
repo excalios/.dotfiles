@@ -21,5 +21,4 @@ require("lazy").setup({
   { import = "excalios.plugins.lsp" }
 })
 
-require('excalios.config.colorscheme')
 require('excalios.config.mapping')
