@@ -47,6 +47,14 @@ return {
           lsp_trouble = true,
           gitgutter = true,
           markdown = true,
+          markview = true,
+          mini = {
+            enabled = true,
+          },
+          dap = true,
+          dap_ui = true,
+          which_key = true,
+          notify = true,
         }
       })
       vim.cmd.colorscheme "catppuccin"

@@ -90,8 +90,10 @@ return {
     lsp.jsonls.setup(config())
 
     --lsp.clangd.setup(config())
-    lsp.jedi_language_server.setup(config())
-    lsp.gopls.setup(config({
+    vim.lsp.config('pyright', config())
+    vim.lsp.enable('pyright')
+
+    vim.lsp.config('gopls', config({
         cmd = {"gopls"},
         settings = {
           gopls = {
@@ -107,6 +109,7 @@ return {
           usePlaceholders = true,
         }
     }))
+    vim.lsp.enable('gopls')
 
     lsp.lua_ls.setup(config({
       settings = {

@@ -1,11 +1,4 @@
 return {
-  --{
-    --'preservim/nerdcommenter',
-    --keys = {
-      --{ "<C-_>", "<Plug>NERDCommenterToggle", desc = "Comment", mode={"n", "x"}},
-    --}
-  --},
-
   {
     "folke/ts-comments.nvim",
     opts = {},
@@ -69,7 +62,7 @@ return {
       { "glf", "<cmd>lua require('timber.actions').search_log_statements()<CR>", desc = "Search Log Statements" },
       { "glt", "<cmd>lua require('timber.actions').insert_log({ templates = { before = 'time_start', after = 'time_end' }, position = 'surround', })<CR>", desc = "Calculate Time and log" },
       { "glOf", "<cmd>lua require('timber.buffers').open_float()<CR>", desc = "Open log result float window" },
-      { "glOs", "<cmd>lua require('timber.summary').open({ focus = true })<CR>", desc = "Open log result float window" },
+      { "glOs", "<cmd>lua require('timber.summary').open({ focus = true })<CR>", desc = "Open log result summary" },
     },
     config = function()
         local opts = {
@@ -82,18 +75,21 @@ return {
               }
             },
             time_end = {
-              python = [[print("%log_marker %filename %line_number Time taken to run:", time.time() - start_time)]],
+              python = [[print("%filename %line_number Time taken to run:", time.time() - start_time)]],
             },
             default = {
-              python = [[print(f"%log_marker %watcher_marker_start {%log_target=} %watcher_marker_end")]],
+              python = [[print(f"%watcher_marker_start {%log_target=} %watcher_marker_end")]],
+              go = [[log.Printf("%watcher_marker_start %log_target: %v %watcher_marker_end\n", %log_target)]],
             },
             plain = {
               python = [[print(f"%log_marker %filename %line_number")]],
+              go = [[log.Printf("%log_marker %filename %line_number")]],
             },
           },
           batch_log_templates = {
             default = {
               python = [[print(f"%log_marker %repeat<{%log_target=}><, >")]],
+              go = [[log.Printf("%log_marker %repeat<%log_target: %v><, >\n", %repeat<%log_target><, >)]],
             },
           },
           log_marker = "🪵", -- Or any other string, e.g: MY_LOG

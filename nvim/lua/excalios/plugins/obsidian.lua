@@ -12,10 +12,12 @@ return {
       "nvim-lua/plenary.nvim",
     },
     keys = {
-      { '<leader>of', "<cmd>ObsidianSearch<CR>", desc="[O]bsidian [F]ind files telescope" },
+      { '<leader>of', "<cmd>ObsidianQuickSwitch<CR>", desc="[O]bsidian [F]ind" },
+      { '<leader>olg', "<cmd>ObsidianSearch<CR>", desc="[O]bsidian [L]ive [G]rep" },
       { '<leader>ot', "<cmd>ObsidianToday<CR>", desc="[O]bsidian [T]oday notes" },
     },
     opts = {
+      ui = { enable = false },
       workspaces = {
         {
           name = "personal",
@@ -117,11 +119,22 @@ return {
     ---@param url string
     follow_url_func = function(url)
       -- Open the URL in the default web browser.
-      vim.fn.jobstart({"open", url})  -- Mac OS
+      -- vim.fn.jobstart({"open", url})  -- Mac OS
       -- vim.fn.jobstart({"xdg-open", url})  -- linux
       -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
-      -- vim.ui.open(url) -- need Neovim 0.10.0+
+      vim.ui.open(url) -- need Neovim 0.10.0+
     end,
+       -- Sets how you follow images
+      ---@param img string
+      follow_img_func = function(img)
+        vim.ui.open(img)
+        -- vim.ui.open(img, { cmd = { "loupe" } })
+      end,
+      open = {
+        func = function(uri)
+          vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
+        end
+      },
       attachments = {
         img_folder = "98 - Assets/imgs",
         ---@param client obsidian.Client
@@ -138,9 +151,38 @@ return {
   {
     "OXY2DEV/markview.nvim",
     lazy = false,
+    priority = 49,
     dependencies = {
       "catppuccin/nvim",
       "nvim-treesitter/nvim-treesitter",
     },
+    opts = {
+      preview = {
+          -- enable_hybrid_mode = true,
+          linewise_hybrid_mode = true,
+          hybrid_modes = {"n", "c", "t"},
+          icon_provider = "mini", -- "mini" or "devicons"
+      },
+      markdown = {
+        list_items = {
+            shift_width = function (buffer, item)
+                --- Reduces the `indent` by 1 level.
+                ---
+                ---         indent                      1
+                --- ------------------------- = 1 ÷ --------- = new_indent
+                --- indent * (1 / new_indent)       new_indent
+                ---
+                local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth);
+
+                return (item.indent) * (1 / (parent_indnet * 2));
+            end,
+            marker_minus = {
+                add_padding = function (_, item)
+                    return item.indent > 1;
+                end
+            }
+        }
+      }
+    }
   }
 }

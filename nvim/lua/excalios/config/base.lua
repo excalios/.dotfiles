@@ -87,7 +87,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.expandtab = true
 
     -- Visuals
-    vim.opt_local.wrap = false          -- Disable line wrapping
+    vim.opt_local.wrap = true          -- Disable line wrapping
     vim.opt_local.spell = false          -- Enable spell check
     vim.opt_local.conceallevel = 2      -- Hide markdown formatting symbols (e.g., **bold**)
     vim.opt_local.concealcursor = "nc"  -- Conceal in normal and command mode
@@ -118,6 +118,6 @@ vim.g["vimspector_enable_mappings"] = "HUMAN"
 -- Maximizer
 vim.g["maximizer_set_default_mapping"] = 0
 
-vim.g["python3_host_prog"] = "/opt/homebrew/bin/python3.11"
+vim.g["python3_host_prog"] = "/usr/bin/python3"
 
 vim.o.grepprg = "rg --vimgrep --no-heading --smart-case" -- Use ripgrep

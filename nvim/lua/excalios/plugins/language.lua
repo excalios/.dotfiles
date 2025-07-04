@@ -8,32 +8,41 @@ return {
   },
 
   {
+    "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    build = ":TSUpdate",
+    config = function()
+      require('nvim-treesitter.configs').setup {
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = { "markdown" }, -- for the obsidian style %% comments
+        },
+        indent = {
+          enable = true,
+        },
+        incremental_selection = {
+          enable = true,
+        },
+        ensure_installed = {
+          "typescript",
+          "go",
+          "lua",
+          "vim",
+          "sql",
+          "markdown",
+          "markdown_inline"
+        }
+      }
+    end,
+    dependencies = { "OXY2DEV/markview.nvim" },
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter-context",
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        config = function()
-          require('nvim-treesitter.configs').setup {
-            highlight = {
-              enable = true,
-            },
-            indent = {
-              enable = true,
-            },
-            incremental_selection = {
-              enable = true,
-            },
-            ensure_installed = {
-              "typescript",
-              "go",
-              "lua",
-              "vim",
-              "sql"
-            }
-          }
-        end,
-      }
+      },
     },
     opts = {}
   },
