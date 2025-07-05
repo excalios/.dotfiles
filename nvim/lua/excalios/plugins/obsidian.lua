@@ -25,7 +25,7 @@ return {
         },
       },
       completion = {
-        nvim_cmp = true,
+        blink = true,
         min_chars = 0,
       },
       mappings = {
@@ -155,6 +155,7 @@ return {
     dependencies = {
       "catppuccin/nvim",
       "nvim-treesitter/nvim-treesitter",
+      "saghen/blink.cmp"
     },
     opts = {
       preview = {

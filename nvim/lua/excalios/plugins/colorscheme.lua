@@ -18,8 +18,7 @@ return {
               colored_indent_levels = false,
           },
           neotest = true,
-          cmp = true,
-          copilot_vim = true,
+          blink_cmp = true,
           native_lsp = {
               enabled = true,
               virtual_text = {

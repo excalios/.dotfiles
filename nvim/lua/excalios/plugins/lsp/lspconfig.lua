@@ -2,12 +2,9 @@ return {
   'neovim/nvim-lspconfig',
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    { 'hrsh7th/cmp-nvim-lsp' },
     {
       "j-hui/fidget.nvim",
-      opts = {
-        -- options
-      },
+      opts = {},
     },
     { 'prabirshrestha/async.vim' },
   },
@@ -29,7 +26,7 @@ return {
 
     local function config(_config)
       return vim.tbl_deep_extend("force", {
-        capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
         on_attach = function()
           Nnoremap("gD", ":lua vim.lsp.buf.declaration()<CR>")
           Nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>")
