@@ -10,13 +10,49 @@ return {
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
+      {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+          image = {
+            resolve = function(path, src)
+              if require("obsidian.api").path_is_note(path) then
+                return require("obsidian.api").resolve_image_path(src)
+              end
+            end,
+          },
+        },
+      }
     },
     keys = {
-      { '<leader>of', "<cmd>ObsidianQuickSwitch<CR>", desc="[O]bsidian [F]ind" },
-      { '<leader>olg', "<cmd>ObsidianSearch<CR>", desc="[O]bsidian [L]ive [G]rep" },
-      { '<leader>ot', "<cmd>ObsidianToday<CR>", desc="[O]bsidian [T]oday notes" },
+      { '<leader>of', "<cmd>Obsidian quick_switch<CR>", desc="[O]bsidian [F]ind" },
+      { '<leader>olg', "<cmd>Obsidian search<CR>", desc="[O]bsidian [L]ive [G]rep" },
+      { '<leader>ot', "<cmd>Obsidian today<CR>", desc="[O]bsidian [T]oday notes" },
     },
     opts = {
+      -- footer = {
+      --   enabled = false, -- turn it off
+      --   separator = false, -- turn it off
+      --   -- separator = "", -- insert a blank line
+      --   format = "{{backlinks}} backlinks  {{properties}} properties  {{words}} words  {{chars}} chars", -- works like the template system
+      --   -- format = "({{backlinks}} backlinks)", -- limit to backlinks
+      --   hl_group = "@property", -- Use another hl group
+      -- },
+      callbacks = {
+        enter_note = function(_, note)
+          vim.keymap.set("n", "<leader>ch", "<cmd>Obsidian toggle_checkbox<cr>", {
+            buffer = note.bufnr,
+            desc = "Toggle checkbox",
+          })
+          vim.keymap.set("n", "<leader>oii", "<cmd>Obsidian paste_img<cr>", {
+            buffer = note.bufnr,
+            desc = "Paste image",
+          })
+        end,
+      },
+      legacy_commands = false,
       ui = { enable = false },
       workspaces = {
         {
@@ -27,41 +63,6 @@ return {
       completion = {
         blink = true,
         min_chars = 0,
-      },
-      mappings = {
-        -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-        ["gf"] = {
-          action = function()
-            return require("obsidian").util.gf_passthrough()
-          end,
-          opts = { noremap = false, expr = true, buffer = true },
-        },
-        -- Toggle check-boxes.
-        ["<leader>ch"] = {
-          action = function()
-            return require("obsidian").util.toggle_checkbox()
-          end,
-          opts = { buffer = true },
-        },
-        -- Smart action depending on context, either follow link or toggle checkbox.
-        ["<CR>"] = {
-          action = function()
-            return require("obsidian").util.smart_action()
-          end,
-          opts = { buffer = true, expr = true },
-        },
-        ["<leader>of"] = {
-          action = "<cmd>ObsidianSearch<CR>",
-        },
-        ["<leader>oii"] = {
-          action = "<cmd>ObsidianPasteImg<CR>",
-        },
-        ["<leader>on"] = {
-          action = ":ObsidianNew ",
-        },
-        ["<leader>ot"] = {
-          action = "<cmd>ObsidianToday<CR>",
-        },
       },
       daily_notes = {
         -- Optional, if you keep daily notes in a separate directory.
@@ -136,14 +137,7 @@ return {
         end
       },
       attachments = {
-        img_folder = "98 - Assets/imgs",
-        ---@param client obsidian.Client
-        ---@param path obsidian.Path the absolute path to the image file
-        ---@return string
-        img_text_func = function(client, path)
-          path = client:vault_relative_path(path) or path
-          return string.format("![[%s]]", path)
-        end,
+        img_folder = "/98 - Assets/imgs",
       },
     },
   },

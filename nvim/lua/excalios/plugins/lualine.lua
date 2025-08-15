@@ -29,7 +29,6 @@ local lualine_config = function()
         icons_enabled = true,
       }},
       lualine_x = {
-        "g:obsidian",
         'encoding',
         'filetype',
         {
