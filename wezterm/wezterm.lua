@@ -89,4 +89,6 @@ config.color_scheme = 'Catppuccin Macchiato'
 config.font = wezterm.font 'Hack Nerd Font Mono'
 config.font_size = 12
 
+config.enable_kitty_graphics = true
+
 return config

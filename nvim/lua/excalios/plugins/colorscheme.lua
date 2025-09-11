@@ -18,6 +18,7 @@ return {
               colored_indent_levels = false,
           },
           neotest = true,
+          cmp = true,
           blink_cmp = true,
           native_lsp = {
               enabled = true,

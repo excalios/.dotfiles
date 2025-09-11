@@ -118,6 +118,23 @@ vim.g["vimspector_enable_mappings"] = "HUMAN"
 -- Maximizer
 vim.g["maximizer_set_default_mapping"] = 0
 
-vim.g["python3_host_prog"] = "/usr/bin/python3"
+vim.g["python3_host_prog"] = "/opt/homebrew/bin/python3"
 
 vim.o.grepprg = "rg --vimgrep --no-heading --smart-case" -- Use ripgrep
+
+vim.diagnostic.config{
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN]  = "",
+      [vim.diagnostic.severity.INFO]  = "",
+      [vim.diagnostic.severity.HINT]  = "",
+    },
+    linehl = {
+      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+    },
+    numhl = {
+      [vim.diagnostic.severity.WARN] = 'WarningMsg',
+    },
+  },
+}

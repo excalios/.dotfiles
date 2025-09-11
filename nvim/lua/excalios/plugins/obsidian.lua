@@ -61,7 +61,7 @@ return {
         },
       },
       completion = {
-        blink = true,
+        nvim_cmp = true,
         min_chars = 0,
       },
       daily_notes = {
@@ -149,7 +149,6 @@ return {
     dependencies = {
       "catppuccin/nvim",
       "nvim-treesitter/nvim-treesitter",
-      "saghen/blink.cmp"
     },
     opts = {
       preview = {
@@ -179,5 +178,18 @@ return {
         }
       }
     }
-  }
+  },
+
+  {
+      "jalvesaq/zotcite",
+      dependencies = {
+          "nvim-treesitter/nvim-treesitter",
+          "nvim-telescope/telescope.nvim",
+      },
+      config = function ()
+          require("zotcite").setup({
+              -- your options here (see doc/zotcite.txt)
+          })
+      end
+  },
 }
