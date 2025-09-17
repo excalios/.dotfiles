@@ -30,28 +30,9 @@ return {
       { '<leader>of', "<cmd>Obsidian quick_switch<CR>", desc="[O]bsidian [F]ind" },
       { '<leader>olg', "<cmd>Obsidian search<CR>", desc="[O]bsidian [L]ive [G]rep" },
       { '<leader>ot', "<cmd>Obsidian today<CR>", desc="[O]bsidian [T]oday notes" },
+      { '<leader>oii', "<cmd>Obsidian paste_img<CR>", desc="[O]bsidian [I]nsert [I]mage" },
     },
     opts = {
-      -- footer = {
-      --   enabled = false, -- turn it off
-      --   separator = false, -- turn it off
-      --   -- separator = "", -- insert a blank line
-      --   format = "{{backlinks}} backlinks  {{properties}} properties  {{words}} words  {{chars}} chars", -- works like the template system
-      --   -- format = "({{backlinks}} backlinks)", -- limit to backlinks
-      --   hl_group = "@property", -- Use another hl group
-      -- },
-      callbacks = {
-        enter_note = function(_, note)
-          vim.keymap.set("n", "<leader>ch", "<cmd>Obsidian toggle_checkbox<cr>", {
-            buffer = note.bufnr,
-            desc = "Toggle checkbox",
-          })
-          vim.keymap.set("n", "<leader>oii", "<cmd>Obsidian paste_img<cr>", {
-            buffer = note.bufnr,
-            desc = "Paste image",
-          })
-        end,
-      },
       legacy_commands = false,
       ui = { enable = false },
       workspaces = {
@@ -65,39 +46,18 @@ return {
         min_chars = 0,
       },
       daily_notes = {
-        -- Optional, if you keep daily notes in a separate directory.
         folder = "09 - Dailies",
-        -- Optional, if you want to change the date format for the ID of daily notes.
         date_format = "%Y-%m-%d",
-        -- Optional, if you want to change the date format of the default alias of daily notes.
         alias_format = "%B %-d, %Y",
-        -- Optional, default tags to add to each new daily note created.
         default_tags = { "daily" },
-        -- Optional, if you want to automatically insert a template from your template directory like 'daily.md'
-        template = nil
+        workdays_only = false,
       },
-      picker = {
-        -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
-        name = "telescope.nvim",
-        -- Optional, configure key mappings for the picker. These are the defaults.
-        -- Not all pickers support all mappings.
-        mappings = {
-          -- Create a new note from your query.
-          new = "<C-x>",
-          -- Insert a link to the selected note.
-          insert_link = "<C-l>",
-        },
-      },
-      -- Optional, customize how note IDs are generated given an optional title.
+      new_notes_location = "current_dir",
       ---@param title string|?
       ---@return string
       note_id_func = function(title)
-        -- Create note IDs in a Zettelkasten format with a timestamp and a suffix.
-        -- In this case a note with the title 'My new note' will be given an ID that looks
-        -- like '1657296016-my-new-note', and therefore the file name '1657296016-my-new-note.md'
         local suffix = ""
         if title ~= nil then
-          -- If title is given, transform it into valid file name.
           suffix = title
         else
           -- If title is nil, just add 4 random uppercase letters to the suffix.
@@ -105,39 +65,21 @@ return {
             suffix = suffix .. string.char(math.random(65, 90))
           end
         end
-        return os.date('%Y%m%d%H%M') .. " " .. suffix
+        return suffix
       end,
-       -- Optional, customize how note file names are generated given the ID, target directory, and title.
-       ---@param spec { id: string, dir: obsidian.Path, title: string|? }
-       ---@return string|obsidian.Path The full path to the new note.
-       note_path_func = function(spec)
-         -- This is equivalent to the default behavior.
-         local path = spec.dir / tostring(spec.id)
-         return path:with_suffix(".md")
-       end,
+      -- Optional, customize how note file names are generated given the ID, target directory, and title.
+      ---@param spec { id: string, dir: obsidian.Path, title: string|? }
+      ---@return string|obsidian.Path The full path to the new note.
+      note_path_func = function(spec)
+        -- This is equivalent to the default behavior.
+        local path = spec.dir / tostring(spec.id)
+        return path:with_suffix(".md")
+      end,
       -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external
-    -- URL it will be ignored but you can customize this behavior here.
-    ---@param url string
-    follow_url_func = function(url)
-      -- Open the URL in the default web browser.
-      -- vim.fn.jobstart({"open", url})  -- Mac OS
-      -- vim.fn.jobstart({"xdg-open", url})  -- linux
-      -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
-      vim.ui.open(url) -- need Neovim 0.10.0+
-    end,
-       -- Sets how you follow images
-      ---@param img string
-      follow_img_func = function(img)
-        vim.ui.open(img)
-        -- vim.ui.open(img, { cmd = { "loupe" } })
-      end,
-      open = {
-        func = function(uri)
-          vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
-        end
-      },
+      -- URL it will be ignored but you can customize this behavior here.
+      ---@param url string
       attachments = {
-        img_folder = "/98 - Assets/imgs",
+        img_folder = "assets/imgs",
       },
     },
   },
