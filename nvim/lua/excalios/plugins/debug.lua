@@ -58,19 +58,23 @@ return {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
-      "nvim-treesitter/nvim-treesitter",
+      { "nvim-treesitter/nvim-treesitter", branch = "main" }, -- Optional
 
       "nvim-neotest/neotest-plenary",
       "nvim-neotest/neotest-vim-test",
       {
         "fredrikaverpil/neotest-golang",
-         dependencies = {
+        version = "*",  -- Optional, but recommended
+        dependencies = {
           {
             "leoluz/nvim-dap-go",
             opts = {},
           },
         },
-        version = "*"
+        build = function()
+          vim.system({"go", "install", "gotest.tools/gotestsum@latest"}):wait() -- Optional, but recommended
+          vim.cmd([[:TSUpdate go]])  -- Optional
+        end,
       },
       "nvim-neotest/neotest-python",
     },
