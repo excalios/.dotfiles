@@ -10,7 +10,6 @@ return {
     { 'prabirshrestha/async.vim' },
   },
   config = function()
-    local lsp = require('lspconfig')
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -45,65 +44,17 @@ return {
       }, _config or {})
     end
 
-    lsp.jdtls.setup(config())
-    lsp.rust_analyzer.setup(config({
-      settings = {
-        ["rust-analyzer"] = {
-          imports = {
-            granularity = {
-              group = "module",
-            },
-            prefix = "self",
-          },
-          cargo = {
-            buildScripts = {
-              enable = true,
-            },
-          },
-          procMacro = {
-            enable = true
-          },
-        }
-      }
-    }))
+    vim.lsp.config('*', config())
 
-    -- Web Language Server
-    lsp.html.setup(config())
-    lsp.emmet_ls.setup(config())
-    lsp.cssls.setup(config())
-    --lsp.cssmodules_ls.setup(config())
-
-    lsp.intelephense.setup(config())
-
-    lsp.gdscript.setup(config())
-
-    lsp.dartls.setup(config())
-    lsp.kotlin_language_server.setup(config())
-
-    -- vim.lsp.config("ts_go_ls", {
-    --     cmd = { vim.loop.os_homedir() .. "/dev/typescript-go/built/local/tsgo", "lsp", "-stdio" },
-    --     filetypes = {
-    --         "javascript",
-    --         "javascriptreact",
-    --         "javascript.jsx",
-    --         "typescript",
-    --         "typescriptreact",
-    --         "typescript.tsx",
-    --     },
-    --     root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
-    -- })
-    -- vim.lsp.enable("ts_go_ls")
-    vim.lsp.config('ts_ls', config())
+    -- vim.lsp.config('ts_ls', config())
     vim.lsp.enable('ts_ls')
-    -- lsp.ts_ls.setup(config())
-    lsp.tailwindcss.setup(config())
-    lsp.dockerls.setup(config())
-    lsp.eslint.setup(config())
-    lsp.yamlls.setup(config())
-    lsp.jsonls.setup(config())
 
-    --lsp.clangd.setup(config())
-    vim.lsp.config('pyright', config())
+
+    -- vim.lsp.config('yamlls', config())
+    vim.lsp.enable('yamlls')
+    vim.lsp.enable({'dockerls', 'eslint', 'yamlls', 'jsonls'})
+
+    -- vim.lsp.config('pyright', config())
     vim.lsp.enable('pyright')
 
     vim.lsp.config('gopls', config({
@@ -124,7 +75,7 @@ return {
     }))
     vim.lsp.enable('gopls')
 
-    lsp.lua_ls.setup(config({
+    vim.lsp.config('lua_ls', config({
       settings = {
         Lua = {
           runtime = {
@@ -146,5 +97,11 @@ return {
         },
       },
     }))
+    vim.lsp.enable('lua_ls')
+
+    vim.lsp.config('elixirls', config({
+      cmd = { "/Users/v01d/dev/elixir/lsp/language_server.sh" };
+    }))
+    vim.lsp.enable('elixirls')
   end
 }

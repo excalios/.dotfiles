@@ -185,3 +185,31 @@ automatically-unhide-macos-hidden-apps = true
 [[on-window-detected]]
   if.app-id = 'app.zen-browser.zen'
   run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+  if.app-id = 'com.brave.Browser'
+  run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+  if.app-id = 'com.tinyspeck.slackmacgap'
+  run = 'move-node-to-workspace 9'
+
+[[on-window-detected]]
+  if.app-id = 'com.apple.MobileSMS'
+  run = 'move-node-to-workspace 9'
+
+[[on-window-detected]]
+  if.app-id = 'net.whatsapp.WhatsApp'
+  run = 'move-node-to-workspace 9'
+
+[[on-window-detected]]
+  if.app-id = 'org.whispersystems.signal-desktop'
+  run = 'move-node-to-workspace 9'
+
+[[on-window-detected]]
+  if.app-id = 'md.obsidian'
+  run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+  if.app-id = 'com.super-productivity.app'
+  run = 'move-node-to-workspace 10'

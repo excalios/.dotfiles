@@ -35,9 +35,6 @@ local lspconfig = function()
         },
         {
           { name = 'buffer' },
-        },
-        {
-          { name = 'cmp_zotcite' },
         }
       ),
       formatting = {
@@ -68,7 +65,6 @@ return {
       { 'prabirshrestha/async.vim' },
       { 'L3MON4D3/LuaSnip' },
       { 'saadparwaiz1/cmp_luasnip' },
-      { 'jalvesaq/cmp-zotcite' }
     },
     opts = function(_, opts)
       opts.sources = opts.sources or {}

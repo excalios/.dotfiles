@@ -14,10 +14,29 @@ return {
     build = ":TSUpdate",
     config = function()
       vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'go', 'gomod', 'gosum', 'python', 'lua', 'json', 'markdown' },
+        pattern = {
+          'go',
+          'gomod',
+          'gosum',
+          'python',
+          'lua',
+          'json',
+          'markdown',
+          'javascript',
+          'typescript',
+          'javascriptreact',
+          'typescriptreact',
+          'html',
+          'css',
+          'less',
+          'scss',
+          'yaml',
+          'elixir',
+        },
         callback = function()
           vim.treesitter.start()
           vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          -- vim.wo.foldmethod = 'expr'
           vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
       })
@@ -67,7 +86,47 @@ return {
     },
     keys = {
       {"<leader>xx", "<cmd>Trouble diagnostics toggle<cr>"},
+      {"[t", function() require("trouble").previous({skip_groups = true, jump = true}) end},
+      {"]t", function() require("trouble").next({skip_groups = true, jump = true}) end},
     }
+  },
+
+  {
+    "stevearc/conform.nvim",
+    opts = {},
+    config = function()
+      require("conform").setup({
+        format_on_save = {
+          timeout_ms = 5000,
+                  lsp_format = "fallback",
+        },
+        formatters_by_ft = {
+          c = { "clang-format" },
+          cpp = { "clang-format" },
+          lua = { "stylua" },
+          go = { "gofmt" },
+          javascript = { "prettier" },
+          typescript = { "prettier" },
+          elixir = { "mix" },
+        },
+        formatters = {
+          ["clang-format"] = {
+            prepend_args = { "-style=file", "-fallback-style=LLVM" },
+          },
+        },
+      })
+
+      -- vim.api.nvim_create_autocmd("BufWritePre", {
+      --   pattern = "*",
+      --   callback = function(args)
+      --     require("conform").format({ bufnr = args.buf })
+      --   end,
+      -- })
+
+      vim.keymap.set("n", "<leader>f", function()
+        require("conform").format({ bufnr = 0 })
+      end)
+    end,
   },
 
     -- Specific Languages
@@ -75,19 +134,10 @@ return {
   {
     'jpalardy/vim-slime',
     config = function()
-      vim.g["slime_target"] = "tmux"
+      vim.g["slime_target"] = "wezterm"
+      vim.g["slime_default_config"] = {pane_direction= "right"}
       vim.g["slime_bracketed_paste"] = 1
     end,
-  },
-
-  {
-    "prettier/vim-prettier",
-    build = "yarn workspaces focus",
-    ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "css", "less", "scss", "json", "graphql", "vue", "yaml", "html" },
-    config = function()
-      vim.g["prettier#autoformat"] = 1
-      vim.g["prettier#autoformat_require_pragma"] = 0
-    end
   },
 
   -- Go

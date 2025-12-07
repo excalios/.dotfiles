@@ -60,7 +60,7 @@ set.completeopt = {"menuone", "noselect"}
 
 set.list = true
 
-set.wrap = true
+set.wrap = false
 set.textwidth=0
 set.linebreak = true
 
@@ -107,10 +107,6 @@ vim.api.nvim_create_autocmd("FileType", {
 --   end,
 --   group = "MarkdownSettings",
 -- })
-
--- Prettier
-vim.g["prettier#autoformat"] = 1
-vim.g["prettier#autoformat_require_pragma"] = 0
 
 -- Debugger
 vim.g["vimspector_enable_mappings"] = "HUMAN"
