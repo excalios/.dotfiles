@@ -15,7 +15,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- Allow backspacing over everything in insert mode
-set.backspace = {"indent", "eol", "start"}
+set.backspace = { "indent", "eol", "start" }
 set.ruler = true
 set.showcmd = true
 set.wildmenu = true
@@ -56,12 +56,12 @@ set.splitright = true
 set.colorcolumn = "80"
 
 set.updatetime = 100
-set.completeopt = {"menuone", "noselect"}
+set.completeopt = { "menuone", "noselect" }
 
 set.list = true
 
 set.wrap = false
-set.textwidth=0
+set.textwidth = 0
 set.linebreak = true
 
 set.breakindent = true
@@ -71,7 +71,7 @@ vim.scriptencoding = "utf-8"
 set.encoding = "utf-8"
 set.fileencoding = "utf-8"
 
-set.conceallevel=1
+set.conceallevel = 1
 
 -- Markdown
 -- vim.api.nvim_create_augroup("MarkdownSettings", { clear = true })
@@ -88,9 +88,9 @@ vim.api.nvim_create_autocmd("FileType", {
 
     -- Visuals
     vim.opt_local.wrap = true          -- Disable line wrapping
-    vim.opt_local.spell = false          -- Enable spell check
-    vim.opt_local.conceallevel = 2      -- Hide markdown formatting symbols (e.g., **bold**)
-    vim.opt_local.concealcursor = "nc"  -- Conceal in normal and command mode
+    vim.opt_local.spell = false        -- Enable spell check
+    vim.opt_local.conceallevel = 2     -- Hide markdown formatting symbols (e.g., **bold**)
+    vim.opt_local.concealcursor = "nc" -- Conceal in normal and command mode
 
     -- Optional: show trailing whitespace for formatting awareness
     vim.opt_local.list = true
@@ -114,11 +114,14 @@ vim.g["vimspector_enable_mappings"] = "HUMAN"
 -- Maximizer
 vim.g["maximizer_set_default_mapping"] = 0
 
-vim.g["python3_host_prog"] = "/opt/homebrew/bin/python3"
+local python_path = vim.fn.exepath("python3")
+if python_path ~= "" then
+  vim.g.python3_host_prog = python_path
+end
 
 vim.o.grepprg = "rg --vimgrep --no-heading --smart-case" -- Use ripgrep
 
-vim.diagnostic.config{
+vim.diagnostic.config {
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = "",
