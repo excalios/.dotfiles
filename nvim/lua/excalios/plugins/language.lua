@@ -41,7 +41,7 @@ return {
         end,
       })
 
-      require'nvim-treesitter'.setup {
+      require 'nvim-treesitter'.setup {
         highlight = {
           enable = true,
           additional_vim_regex_highlighting = { "markdown" }, -- for the obsidian style %% comments
@@ -85,9 +85,9 @@ return {
       mode = "workspace_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
     },
     keys = {
-      {"<leader>xx", "<cmd>Trouble diagnostics toggle<cr>"},
-      {"[t", function() require("trouble").previous({skip_groups = true, jump = true}) end},
-      {"]t", function() require("trouble").next({skip_groups = true, jump = true}) end},
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>" },
+      { "[t",         function() require("trouble").previous({ skip_groups = true, jump = true }) end },
+      { "]t",         function() require("trouble").next({ skip_groups = true, jump = true }) end },
     }
   },
 
@@ -98,7 +98,7 @@ return {
       require("conform").setup({
         format_on_save = {
           timeout_ms = 5000,
-                  lsp_format = "fallback",
+          lsp_format = "fallback",
         },
         formatters_by_ft = {
           c = { "clang-format" },
@@ -129,13 +129,13 @@ return {
     end,
   },
 
-    -- Specific Languages
+  -- Specific Languages
 
   {
     'jpalardy/vim-slime',
     config = function()
-      vim.g["slime_target"] = "wezterm"
-      vim.g["slime_default_config"] = {pane_direction= "right"}
+      vim.g["slime_target"] = "zellij"
+      vim.g["slime_default_config"] = { session_id = "current", relative_pane = "right" }
       vim.g["slime_bracketed_paste"] = 1
     end,
   },

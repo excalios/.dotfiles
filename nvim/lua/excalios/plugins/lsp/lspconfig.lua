@@ -15,7 +15,7 @@ return {
 
     function CreateNoremap(type, opts)
       return function(lhs, rhs, bufnr)
-            bufnr = bufnr or 0
+        bufnr = bufnr or 0
         vim.api.nvim_buf_set_keymap(bufnr, type, lhs, rhs, opts)
       end
     end
@@ -46,32 +46,32 @@ return {
 
     vim.lsp.config('*', config())
 
-    -- vim.lsp.config('ts_ls', config())
+    vim.lsp.config('ts_ls', config())
     vim.lsp.enable('ts_ls')
 
 
     -- vim.lsp.config('yamlls', config())
     vim.lsp.enable('yamlls')
-    vim.lsp.enable({'dockerls', 'eslint', 'yamlls', 'jsonls'})
+    vim.lsp.enable({ 'dockerls', 'eslint', 'yamlls', 'jsonls' })
 
     -- vim.lsp.config('pyright', config())
     vim.lsp.enable('pyright')
 
     vim.lsp.config('gopls', config({
-        cmd = {"gopls"},
-        settings = {
-          gopls = {
-            experimentalPostfixCompletions = true,
-            analyses = {
-              unusedparams = true,
-              shadow = true,
-            },
-            staticcheck = true,
+      cmd = { "gopls" },
+      settings = {
+        gopls = {
+          experimentalPostfixCompletions = true,
+          analyses = {
+            unusedparams = true,
+            shadow = true,
           },
+          staticcheck = true,
         },
-        init_options = {
-          usePlaceholders = true,
-        }
+      },
+      init_options = {
+        usePlaceholders = true,
+      }
     }))
     vim.lsp.enable('gopls')
 
@@ -84,7 +84,7 @@ return {
           },
           diagnostics = {
             -- Get the language server to recognize the `vim` global
-            globals = {'vim'},
+            globals = { 'vim' },
           },
           workspace = {
             -- Make the server aware of Neovim runtime files
@@ -100,7 +100,7 @@ return {
     vim.lsp.enable('lua_ls')
 
     vim.lsp.config('elixirls', config({
-      cmd = { "/Users/v01d/dev/elixir/lsp/language_server.sh" };
+      cmd = { "/Users/v01d/dev/elixir/lsp/language_server.sh" },
     }))
     vim.lsp.enable('elixirls')
   end
