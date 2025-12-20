@@ -56,7 +56,7 @@ keybinds clear-defaults=true {
         bind "j" { Resize "Increase down"; }
         bind "k" { Resize "Increase up"; }
         bind "l" { Resize "Increase right"; }
-        bind "Ctrl n" { SwitchToMode "normal"; }
+        bind "Ctrl r" { SwitchToMode "normal"; }
     }
     move {
         bind "h" { MovePane "left"; }
@@ -94,7 +94,7 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "normal"
         }
-        bind "Ctrl o" { SwitchToMode "normal"; }
+        bind "Ctrl x" { SwitchToMode "normal"; }
         bind "p" {
             LaunchOrFocusPlugin "plugin-manager" {
                 floating true
@@ -118,10 +118,6 @@ keybinds clear-defaults=true {
         }
     }
     shared_except "locked" {
-        bind "Alt left" { MoveFocusOrTab "left"; }
-        bind "Alt down" { MoveFocus "down"; }
-        bind "Alt up" { MoveFocus "up"; }
-        bind "Alt right" { MoveFocusOrTab "right"; }
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt =" { Resize "Increase"; }
@@ -129,11 +125,11 @@ keybinds clear-defaults=true {
         bind "Alt ]" { NextSwapLayout; }
         bind "Alt f" { ToggleFloatingPanes; }
         bind "Ctrl g" { SwitchToMode "locked"; }
-        bind "Alt h" { MoveFocusOrTab "left"; }
-        bind "Alt i" { MoveTab "left"; }
-        bind "Alt j" { MoveFocus "down"; }
-        bind "Alt k" { MoveFocus "up"; }
-        bind "Alt l" { MoveFocusOrTab "right"; }
+        bind "Alt H" { MoveFocusOrTab "left"; }
+        bind "Alt I" { MoveTab "left"; }
+        bind "Alt J" { MoveFocus "down"; }
+        bind "Alt K" { MoveFocus "up"; }
+        bind "Alt L" { MoveFocusOrTab "right"; }
         // bind "Alt n" { NewPane; }
         bind "Alt o" { MoveTab "right"; }
         bind "Alt p" { TogglePaneInGroup; }
@@ -144,7 +140,7 @@ keybinds clear-defaults=true {
     //     bind "Ctrl h" { SwitchToMode "move"; }
     // }
     shared_except "locked" "session" {
-        bind "Ctrl o" { SwitchToMode "session"; }
+        bind "Ctrl x" { SwitchToMode "session"; }
     }
     shared_except "locked" "scroll" "search" "tmux" {
         bind "Ctrl b" { SwitchToMode "tmux"; }
@@ -159,7 +155,7 @@ keybinds clear-defaults=true {
     //     bind "Ctrl p" { SwitchToMode "pane"; }
     // }
     shared_except "locked" "resize" {
-        bind "Ctrl n" { SwitchToMode "resize"; }
+        bind "Ctrl r" { SwitchToMode "resize"; }
     }
     shared_except "normal" "locked" "entersearch" {
         bind "enter" { SwitchToMode "normal"; }
