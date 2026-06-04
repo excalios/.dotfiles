@@ -18,7 +18,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   { import = "excalios.plugins" },
-  { import = "excalios.plugins.lsp" }
 })
 
 require('excalios.config.mapping')

@@ -78,6 +78,7 @@ return {
       },
       "nvim-neotest/neotest-python",
       "nvim-neotest/neotest-jest",
+      "jfpedroza/neotest-elixir",
     },
     config = function()
       local neotest_ns = vim.api.nvim_create_namespace("neotest")
@@ -112,6 +113,7 @@ return {
             end,
             isTestFile = require("neotest-jest.jest-util").defaultIsTestFile,
           }),
+          require("neotest-elixir"),
         },
       })
     end,
@@ -193,6 +195,22 @@ return {
           request = 'attach',
           processId = require 'dap.utils'.pick_process,
         },
+        {
+          name = 'Debug Next.js',
+          type = 'node2',
+          request = 'attach',
+          port = 9229,
+          skipFiles = { '<node_internals>/**' },
+          outFiles = { '${workspaceFolder}/.next/**/*.js' },
+        },
+        {
+          name = 'Debug Next.js API',
+          type = 'node2',
+          request = 'attach',
+          port = 9230, -- API worker port
+          skipFiles = { '<node_internals>/**' },
+          outFiles = { '${workspaceFolder}/.next/**/*.js' },
+        },
       }
       dap.configurations.typescript = {
         {
@@ -212,6 +230,22 @@ return {
           request = 'attach',
           processId = require 'dap.utils'.pick_process,
           outFiles = { "${workspaceFolder}/bin/**/*.js" },
+        },
+        {
+          name = 'Debug Next.js',
+          type = 'node2',
+          request = 'attach',
+          port = 9229,
+          skipFiles = { '<node_internals>/**' },
+          outFiles = { '${workspaceFolder}/.next/**/*.js' },
+        },
+        {
+          name = 'Debug Next.js API',
+          type = 'node2',
+          request = 'attach',
+          port = 9230, -- API worker port
+          skipFiles = { '<node_internals>/**' },
+          outFiles = { '${workspaceFolder}/.next/**/*.js' },
         },
       }
     end,

@@ -27,10 +27,10 @@ return {
       }
     },
     keys = {
-      { '<leader>of', "<cmd>Obsidian quick_switch<CR>", desc="[O]bsidian [F]ind" },
-      { '<leader>olg', "<cmd>Obsidian search<CR>", desc="[O]bsidian [L]ive [G]rep" },
-      { '<leader>ot', "<cmd>Obsidian today<CR>", desc="[O]bsidian [T]oday notes" },
-      { '<leader>oii', "<cmd>Obsidian paste_img<CR>", desc="[O]bsidian [I]nsert [I]mage" },
+      { '<leader>of',  "<cmd>Obsidian quick_switch<CR>", desc = "[O]bsidian [F]ind" },
+      { '<leader>olg', "<cmd>Obsidian search<CR>",       desc = "[O]bsidian [L]ive [G]rep" },
+      { '<leader>ot',  "<cmd>Obsidian today<CR>",        desc = "[O]bsidian [T]oday notes" },
+      { '<leader>oii', "<cmd>Obsidian paste_img<CR>",    desc = "[O]bsidian [I]nsert [I]mage" },
     },
     opts = {
       legacy_commands = false,
@@ -38,7 +38,7 @@ return {
       workspaces = {
         {
           name = "personal",
-          path = "/Users/v01d/Library/Mobile Documents/iCloud~md~obsidian/Documents/Personal",
+          path = "/Users/v01d/Personal",
         },
       },
       completion = {
@@ -46,7 +46,7 @@ return {
         min_chars = 0,
       },
       daily_notes = {
-        folder = "09 - Dailies",
+        folder = "09 - Journal/Daily",
         date_format = "%Y-%m-%d",
         alias_format = "%B %-d, %Y",
         default_tags = { "daily" },
@@ -79,7 +79,7 @@ return {
       -- URL it will be ignored but you can customize this behavior here.
       ---@param url string
       attachments = {
-        img_folder = "assets/imgs",
+        folder = "assets/imgs",
       },
     },
   },
@@ -94,44 +94,44 @@ return {
     },
     opts = {
       preview = {
-          -- enable_hybrid_mode = true,
-          linewise_hybrid_mode = true,
-          hybrid_modes = {"n", "c", "t"},
-          icon_provider = "mini", -- "mini" or "devicons"
+        -- enable_hybrid_mode = true,
+        linewise_hybrid_mode = true,
+        hybrid_modes = { "n", "c", "t" },
+        icon_provider = "mini", -- "mini" or "devicons"
       },
       markdown = {
         list_items = {
-            shift_width = function (buffer, item)
-                --- Reduces the `indent` by 1 level.
-                ---
-                ---         indent                      1
-                --- ------------------------- = 1 ÷ --------- = new_indent
-                --- indent * (1 / new_indent)       new_indent
-                ---
-                local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth);
+          shift_width = function(buffer, item)
+            --- Reduces the `indent` by 1 level.
+            ---
+            ---         indent                      1
+            --- ------------------------- = 1 ÷ --------- = new_indent
+            --- indent * (1 / new_indent)       new_indent
+            ---
+            local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth);
 
-                return (item.indent) * (1 / (parent_indnet * 2));
-            end,
-            marker_minus = {
-                add_padding = function (_, item)
-                    return item.indent > 1;
-                end
-            }
+            return (item.indent) * (1 / (parent_indnet * 2));
+          end,
+          marker_minus = {
+            add_padding = function(_, item)
+              return item.indent > 1;
+            end
+          }
         }
       }
     }
   },
 
   {
-      "jalvesaq/zotcite",
-      dependencies = {
-          "nvim-treesitter/nvim-treesitter",
-          "nvim-telescope/telescope.nvim",
-      },
-      config = function ()
-          require("zotcite").setup({
-              -- your options here (see doc/zotcite.txt)
-          })
-      end
+    "jalvesaq/zotcite",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("zotcite").setup({
+        -- your options here (see doc/zotcite.txt)
+      })
+    end
   },
 }

@@ -7,36 +7,36 @@ return {
     config = function()
       require("catppuccin").setup({
         transparent_background = true, -- disables setting the background color.
-        flavour = "macchiato", -- latte, frappe, macchiato, mocha
+        flavour = "macchiato",         -- latte, frappe, macchiato, mocha
         integrations = {
           gitsigns = true,
           harpoon = true,
           leap = true,
           indent_blankline = {
-              enabled = true,
-              scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-              colored_indent_levels = false,
+            enabled = true,
+            scope_color = "",   -- catppuccin color (eg. `lavender`) Default: text
+            colored_indent_levels = false,
           },
           neotest = true,
           cmp = true,
           blink_cmp = true,
           native_lsp = {
-              enabled = true,
-              virtual_text = {
-                  errors = { "italic" },
-                  hints = { "italic" },
-                  warnings = { "italic" },
-                  information = { "italic" },
-              },
-              underlines = {
-                  errors = { "underline" },
-                  hints = { "underline" },
-                  warnings = { "underline" },
-                  information = { "underline" },
-              },
-              inlay_hints = {
-                  background = true,
-              },
+            enabled = true,
+            virtual_text = {
+              errors = { "italic" },
+              hints = { "italic" },
+              warnings = { "italic" },
+              information = { "italic" },
+            },
+            underlines = {
+              errors = { "underline" },
+              hints = { "underline" },
+              warnings = { "underline" },
+              information = { "underline" },
+            },
+            inlay_hints = {
+              background = true,
+            },
           },
           nvim_surround = true,
           treesitter = true,

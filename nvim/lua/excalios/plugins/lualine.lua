@@ -4,9 +4,9 @@ local lualine_config = function()
   local config = {
     options = {
       icons_enabled = true,
-      theme = "catppuccin",
-      component_separators = { left = '', right = ''},
-      section_separators = { left = '', right = ''},
+      theme = "catppuccin-nvim",
+      component_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
       disabled_filetypes = {
         statusline = {},
         winbar = {},
@@ -21,13 +21,13 @@ local lualine_config = function()
       }
     },
     sections = {
-      lualine_a = {'mode'},
-      lualine_b = {'branch', 'diff', 'diagnostics'},
-      lualine_c = {{
+      lualine_a = { 'mode' },
+      lualine_b = { 'branch', 'diff', 'diagnostics' },
+      lualine_c = { {
         'filename',
         path = 1,
         icons_enabled = true,
-      }},
+      } },
       lualine_x = {
         'encoding',
         'filetype',
@@ -37,19 +37,19 @@ local lualine_config = function()
           color = { fg = "#ff9e64" },
         },
       },
-      lualine_y = {'progress'},
-      lualine_z = {'location'}
+      lualine_y = { 'progress' },
+      lualine_z = { 'location' }
     },
     inactive_sections = {
       lualine_a = {},
       lualine_b = {},
-      lualine_c = {'filename'},
-      lualine_x = {'location'},
+      lualine_c = { 'filename' },
+      lualine_x = { 'location' },
       lualine_y = {},
       lualine_z = {}
     },
     tabline = {
-      lualine_a = {'buffers'},
+      lualine_a = { 'buffers' },
       lualine_b = {},
       lualine_c = {},
       lualine_x = {},
@@ -58,7 +58,7 @@ local lualine_config = function()
     },
     winbar = {},
     inactive_winbar = {},
-    extensions = {'fugitive'}
+    extensions = { 'fugitive' }
   }
 
   -- Inserts a component in lualine_x ot right section

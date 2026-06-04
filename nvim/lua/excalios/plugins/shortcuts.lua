@@ -89,11 +89,17 @@ return {
           default = {
             python = [[print(f"%watcher_marker_start {%log_target=} %watcher_marker_end")]],
             go = [[log.Printf("%watcher_marker_start %log_target: %v %watcher_marker_end\n", %log_target)]],
+            javascript = [[console.log("%watcher_marker_start %log_target", %log_target, "%watcher_marker_end")]],
+            typescript = [[console.log("%watcher_marker_start %log_target", %log_target, "%watcher_marker_end")]],
+            elixir =
+            [[IO.inspect(%log_target, label: "%log_marker F%filename L%line_number %watcher_marker_start %log_target %watcher_marker_end")]],
           },
           plain = {
             python = [[print(f"%log_marker %filename %line_number")]],
             go = [[log.Printf("%log_marker %filename %line_number")]],
+            javascript = [[console.log("%log_marker %filename %line_number")]],
             typescript = [[console.log("%log_marker %filename %line_number")]],
+            elixir = [[IO.puts("%log_marker %filename %line_number")]],
           },
         },
         batch_log_templates = {
