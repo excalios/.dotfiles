@@ -35,8 +35,16 @@ return {
         },
         callback = function()
           vim.treesitter.start()
-          vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-          -- vim.wo.foldmethod = 'expr'
+          -- Enable Treesitter folding
+          vim.opt.foldmethod = "expr"
+          vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+          -- Keep folds open by default when you open a file
+          vim.opt.foldlevel = 99
+          vim.opt.foldlevelstart = 99
+
+          -- Optional: clean up the UI by removing the fold column on the left
+          vim.opt.foldcolumn = "0"
           vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
       })
@@ -107,6 +115,7 @@ return {
           go = { "gofmt" },
           javascript = { "prettier" },
           typescript = { "prettier" },
+          typescriptreact = { "prettier" },
           elixir = { "mix" },
         },
         formatters = {

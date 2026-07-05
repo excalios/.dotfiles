@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+sleep 0.1  # tiny wait for file to be written
+
+if [[ ! -s /tmp/zellij-screen.txt ]]; then
+  echo "❌ No screen dump found"
+  read -k1 "?Press any key to close..."
+  exit 1
+fi
+
+urls=$(sed 's/\x1b\[[0-9;]*m//g' /tmp/zellij-screen.txt | grep -oE 'https?://[^ ]+' | sed 's/[.,;:!?)]*$//' | sort -u)
+
+if [[ -z "$urls" ]]; then
+  echo "No URLs found on screen"
+  read -k1 "?Press any key to close..."
+  rm -f /tmp/zellij-screen.txt
+  exit 0
+fi
+
+picked=$(echo "$urls" | fzf --height=100% --reverse --prompt="open url > ")
+
+[[ -n "$picked" ]] && open "$picked"
+rm -f /tmp/zellij-screen.txt

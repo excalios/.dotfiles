@@ -1,0 +1,158 @@
+{
+  :main [
+    ;; -----------------------------------------------------------
+    ;; 1. GLOBAL MODIFIERS
+    ;; -----------------------------------------------------------
+    {
+      :des "Global Keys"
+      :rules [
+        [:##caps_lock :!C!T!Oleft_shift]
+      ]
+    }
+
+    ;; -----------------------------------------------------------
+    ;; 2. SPACE LAYER SETUP (The Magic Fix)
+    ;; -----------------------------------------------------------
+    ; {
+    ;   :des "Space Layer Activator (Dual-Role)"
+    ;   :rules [
+    ;     ;; LOGIC:
+    ;     ;; 1. Key Down: Set variable "space_mode" to 1
+    ;     ;; 2. Key Up: Set variable "space_mode" to 0
+    ;     ;; 3. If Tapped Alone (no other key pressed): Output "spacebar"
+    ;     [:spacebar ["space_mode" 1] nil {:afterup ["space_mode" 0] :alone :spacebar}]
+    ;   ]
+    ; }
+
+    ;; -----------------------------------------------------------
+    ;; 3. SPACE LAYER MAPPINGS
+    ;; -----------------------------------------------------------
+    ; {
+    ;   :des "Space Layer Content (Fixed)"
+    ;   :rules [
+    ;     :space_mode 
+    ;
+    ;     ;; =======================================================
+    ;     ;; 1. THE MISSING KEYS (Added)
+    ;     ;; =======================================================
+    ;     [:z :comma]          ;; Space + Z -> ,
+    ;     [:x :period]         ;; Space + X -> .
+    ;     [:c :!Sslash]        ;; Space + C -> ? 
+    ;                          ;; (Easier than Shift+M)
+    ;
+    ;     [:g :quote]          ;; Space + G -> '
+    ;     [:!Sg :!Squote]      ;; Space + Shift + G -> "
+    ;     [:!Rg :!Squote]
+    ;
+    ;     ;; =======================================================
+    ;     ;; 2. RIGHT HAND - BRACKETS & LOGIC (Existing)
+    ;     ;; =======================================================
+    ;     [:j :!S9]            ;; (
+    ;     [:k :!S0]            ;; )
+    ;     [:!Sj :!Scomma]      ;; <
+    ;     [:!Rj :!Scomma]
+    ;     [:!Sk :!Speriod]     ;; >
+    ;     [:!Rk :!Speriod]
+    ;
+    ;     [:h :open_bracket]   ;; [
+    ;     [:l :close_bracket]  ;; ]
+    ;     [:!Sh :backslash]    ;; \
+    ;     [:!Rh :backslash]
+    ;     [:!Sl :!Sbackslash]  ;; |
+    ;     [:!Rl :!Sbackslash]
+    ;
+    ;     [:m :!Sopen_bracket]      ;; {
+    ;     [:comma :!Sclose_bracket] ;; }
+    ;
+    ;     ;; Keep Shift+M as backup for ? if you have muscle memory
+    ;     [:!Sm :!Sslash]           
+    ;     [:!Rm :!Sslash]
+    ;
+    ;     [:semicolon :semicolon]       ;; ;
+    ;     [:!Ssemicolon :!Ssemicolon]   ;; :
+    ;     [:!Rsemicolon :!Ssemicolon]
+    ;
+    ;     ;; =======================================================
+    ;     ;; 3. LEFT HAND - MATH & OPERATORS (Existing)
+    ;     ;; =======================================================
+    ;     [:f :equal_sign]     ;; =
+    ;     [:!Sf :!S8]          ;; *
+    ;     [:!Rf :!S8]
+    ;
+    ;     [:d :!Shyphen]       ;; _
+    ;     [:!Sd :!S1]          ;; !
+    ;     [:!Rd :!S1]
+    ;
+    ;     [:s :hyphen]         ;; -
+    ;     [:!Ss :!S4]          ;; $
+    ;     [:!Rs :!S4]
+    ;
+    ;     [:a :!Sequal_sign]   ;; +
+    ;     [:!Sa :!S7]          ;; &
+    ;     [:!Ra :!S7]
+    ;
+    ;     ;; =======================================================
+    ;     ;; 4. CENTER & EXTRAS (Existing)
+    ;     ;; =======================================================
+    ;     [:n :slash]          ;; /
+    ;
+    ;     [:b :grave_accent_and_tilde]    ;; `
+    ;     [:!Sb :!Sgrave_accent_and_tilde] ;; ~
+    ;     [:!Rb :!Sgrave_accent_and_tilde]
+    ;
+    ;     [:v :!S5]            ;; %
+    ;
+    ;     ;; =======================================================
+    ;     ;; 5. NUMBER ROW (Existing)
+    ;     ;; =======================================================
+    ;     [:q :1] [:w :2] [:e :3] [:r :4] [:t :5] 
+    ;     [:y :6] [:u :7] [:i :8] [:o :9] [:p :0]
+    ;   ]
+    ; }
+
+    ;; -----------------------------------------------------------
+    ;; 4. QWERTY TOGGLE
+    ;; -----------------------------------------------------------
+    {
+      :des "QWERTY Mode Toggle"
+      :rules [
+        [:!RE1 ["qwerty-mode" 1]]
+        [:!RE2 ["qwerty-mode" 0]]
+      ]
+    }
+
+    ;; -----------------------------------------------------------
+    ;; 5. PROGRAMMER DVORAK
+    ;; -----------------------------------------------------------
+    {
+      :des "Programmer Dvorak"
+      :rules [
+        :!qwerty-mode
+        
+        ;; [ROW 1 - Inverted]
+        [:!Sgrave_accent_and_tilde :!Sgrave_accent_and_tilde] [:!Rgrave_accent_and_tilde :!Sgrave_accent_and_tilde] [:grave_accent_and_tilde :!S4]
+        [:!S1 :!S5] [:!R1 :!S5] [:1 :!S7]
+        [:!S2 :7]   [:!R2 :7]   [:2 :open_bracket]
+        [:!S3 :5]   [:!R3 :5]   [:3 :!Sopen_bracket]
+        [:!S4 :3]   [:!R4 :3]   [:4 :!Sclose_bracket]
+        [:!S5 :1]   [:!R5 :1]   [:5 :!S9]
+        [:!S6 :9]   [:!R6 :9]   [:6 :equal_sign]
+        [:!S7 :0]   [:!R7 :0]   [:7 :!S8]
+        [:!S8 :2]   [:!R8 :2]   [:8 :!S0]
+        [:!S9 :4]   [:!R9 :4]   [:9 :!Sequal_sign]
+        [:!S0 :6]   [:!R0 :6]   [:0 :close_bracket]
+        [:!Shyphen :8] [:!Rhyphen :8] [:hyphen :!S1]
+        [:!Sequal_sign :grave_accent_and_tilde] [:!Requal_sign :grave_accent_and_tilde] [:equal_sign :!S3]
+
+        ;; [LETTERS]
+        [:##q :semicolon] [:##w :comma] [:##e :period] [:##r :p] [:##t :y] 
+        [:##y :f] [:##u :g] [:##i :c] [:##o :r] [:##p :l] 
+        [:##open_bracket :slash] 
+        [:!Sclose_bracket :!S6] [:!Rclose_bracket :!S6] [:close_bracket :!S2]
+        [:##backslash :backslash]
+        [:##a :a] [:##s :o] [:##d :e] [:##f :u] [:##g :i] [:##h :d] [:##j :h] [:##k :t] [:##l :n] [:##semicolon :s] [:##quote :hyphen]
+        [:##z :quote] [:##x :q] [:##c :j] [:##v :k] [:##b :x] [:##n :b] [:##m :m] [:##comma :w] [:##period :v] [:##slash :z]
+      ]
+    }
+  ]
+}

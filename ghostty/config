@@ -1,0 +1,109 @@
+# This is the configuration file for Ghostty.
+#
+# The template does not set any default options, since Ghostty ships
+# with sensible defaults for all options. Users should only need to set
+# options that they want to change from the default.
+#
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# window-padding-x = 2
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+
+# Performance
+
+confirm-close-surface = false
+quit-after-last-window-closed = true
+
+# Apperance
+
+## Font
+
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 12
+font-feature = +calt
+font-feature = +liga
+font-thicken = false
+
+## Cursor
+
+cursor-style = block
+cursor-style-blink = false
+cursor-invert-fg-bg = true
+
+## Window / Padding
+
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+window-padding-color = extend
+window-decoration = false
+
+maximize = true
+
+## Theme
+
+theme = Catppuccin Macchiato
+background-opacity = 0.8
+background-blur = true
+
+# Rendering
+
+resize-overlay = never
+
+mouse-hide-while-typing = true
+
+# Scrollback
+
+scrollback-limit = 100000
+
+# Shell
+
+term = xterm-ghostty
+
+shell-integration = zsh
+shell-integration-features = cursor,sudo,title
+
+
+# Quick Terminal
+
+## Bindings
+
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+## Position/Animation settings
+
+quick-terminal-position = top
+quick-terminal-animation-duration = 0.2
+
+# Keybinds
+
+macos-option-as-alt = true
+
+## Pass Ctrl+/ and Ctrl+\ through instead of intercepting
+keybind = ctrl+slash=text:\x1f
+keybind = ctrl+backslash=text:\x1c
+
+## Disable Ghostty's own tab/split shortcuts so Zellij owns them
+keybind = ctrl+shift+t=unbind
+keybind = ctrl+shift+n=unbind
+keybind = ctrl+shift+w=unbind
+
+# Clipboard
+clipboard-read = allow
+clipboard-write = allow
+clipboard-trim-trailing-spaces = true
+
+# URLs
+link-url = true

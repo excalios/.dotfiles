@@ -12,11 +12,13 @@ return {
 
     vim.lsp.enable({
       'vtsls',
+      'tailwindcss',
+      'emmet_ls',
       'yamlls',
       'dockerls',
       'eslint',
       'jsonls',
-      'ty',
+      'pyright',
       'gopls',
       'lua_ls',
       'expert', -- Elixir

@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+# Dump the current pane FIRST, synchronously
+/opt/homebrew/bin/zellij action dump-screen --path /tmp/zellij-screen.txt 2>/dev/null
+
+# Verify the dump has content before proceeding
+if [[ ! -s /tmp/zellij-screen.txt ]]; then
+  exit 1
+fi
+
+# Now open the picker — dump is already saved
+/opt/homebrew/bin/zellij action new-pane --floating --name "url-pick" -- zsh -i -c "/Users/v01d/.config/ghostty/bin/url-pick"
